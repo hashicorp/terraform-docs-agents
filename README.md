@@ -3,6 +3,66 @@ Content for Terraform's agents documentation.
 
 - https://terraform.io/cloud-docs/agents
 
+<!-- BEGIN: contributions -->
+<!-- Generated text, do not edit directly -->
+
+## Contributions Welcome!
+
+If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript, we welcome contributions. Feel free to open issues or pull requests like any normal GitHub project, and we'll merge it in 🚀
+
+<!-- END: contributions -->
+
+## Where the Docs Live
+
+| Subpath | Repository |
+| :--- | :--- |
+| [`/cdktf`][cdktf]                         | [terraform-cdk] |
+| [`/cli`][cli]                             | [terraform] |
+| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common] |
+| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents] |
+| [`/configuration`][configuration]         | [terraform] |
+| [`/docs`][docs]                           | [terraform] |
+| [`/enterprise`][enterprise]               | [terraform-website] |
+| [`/guides`][guides]                       | [terraform] |
+| [`/internals`][internals]                 | [terraform] |
+| [`/intro`][intro]                         | [terraform] |
+| [`/language`][language]                   | [terraform] |
+| [`/plugin`][plugin]                       | [terraform-docs-common] |
+| [`/plugin/framework`][plugin/framework]   | [terraform-plugin-framework] |
+| [`/plugin/log`][plugin/log]               | [terraform-plugin-log] |
+| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux] |
+| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk] |
+| [`/registry`][registry]                   | [terraform-docs-common] |
+
+[cdktf]: https://www.terraform.io/cdktf
+[cli]: https://www.terraform.io/cli
+[cloud-docs]: https://www.terraform.io/cloud-docs
+[cloud-docs/agents]: https://www.terraform.io/cloud-docs/agents
+[configuration]: https://www.terraform.io/configuration
+[docs]: https://www.terraform.io/docs
+[enterprise]: https://www.terraform.io/enterprise
+[guides]: https://www.terraform.io/guides
+[internals]: https://www.terraform.io/internals
+[intro]: https://www.terraform.io/intro
+[language]: https://www.terraform.io/language
+[plugin]: https://www.terraform.io/plugin
+[plugin/framework]: https://www.terraform.io/plugin/framework
+[plugin/log]: https://www.terraform.io/plugin/log
+[plugin/mux]: https://www.terraform.io/plugin/mux
+[plugin/sdkv2]: https://www.terraform.io/plugin/sdkv2
+[registry]: https://www.terraform.io/registry
+
+[terraform-cdk]: https://github.com/hashicorp/terraform-cdk
+[terraform]: https://github.com/hashicorp/terraform
+[terraform-website]: https://github.com/hashicorp/terraform-cdk
+[terraform-docs-common]: https://github.com/hashicorp/terraform-docs-common
+[terraform-docs-agents]: https://github.com/hashicorp/terraform-docs-agents
+[terraform-plugin-sdk]: https://github.com/hashicorp/terraform-plugin-sdk
+[terraform-plugin-log]: https://github.com/hashicorp/terraform-plugin-log
+[terraform-plugin-mux]: https://github.com/hashicorp/terraform-plugin-mux
+[terraform-plugin-framework]: https://github.com/hashicorp/terraform-plugin-framework
+
+
 ## Running the Site Locally
 
 ### Using Docker
@@ -79,6 +139,10 @@ There are several custom markdown plugins that are available by default that enh
   ```
 
   ...while it perhaps would not be an improved user experience, no links would break because of it. The best approach is to **avoid changing headlines and inline code at the start of a list item**. If you must change one of these items, make sure to tag someone from the digital marketing development team on your pull request, they will help to ensure as much compatibility as possible.
+
+### Custom Components
+
+A number of custom [mdx components](https://mdxjs.com/) are available for use within any .mdx file. If you have questions about custom components, or have a request for a new custom component, please reach out to @hashicorp/digital-marketing.
 
 ### Syntax Highlighting
 
