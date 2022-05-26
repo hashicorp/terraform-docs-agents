@@ -40,4 +40,11 @@ website/build-local:
 	@docker build https://github.com/hashicorp/terraform-website.git\#$(WEBSITE_BRANCH) \
 		-t $(WEBSITE_DOCKER_IMAGE_LOCAL)
 
-.PHONY: website website/local website/build-local
+# Updates various markdown blocks 
+# <!-- BEGIN: [...] -->
+# <!-- END: [...] -->
+gen/readme:
+	@echo "==> Generating README.md"
+	@npx -p @hashicorp/platform-cli next-hashicorp markdown-blocks ./README.md
+
+.PHONY: website website/local website/build-local gen/readme
