@@ -16,6 +16,23 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.2.6 (06/24/2022)
+
+BUG FIXES:
+
+* Fixed execution of internal Terraform commands when TF_* args are set (#170)
+
+## 1.2.5 (06/23/2022)
+
+BUG FIXES:
+
+* Fixed support for absolute symlinks which point to relative files (#168)
+* Added a fixed deadline for telemetry shutdown (#166)
+
+IMPROVEMENTS:
+
+* Added user-error classification for bad data during filesystem uploads (#167)
+
 ## 1.2.4 (06/21/2022)
 
 BUG FIXES:
