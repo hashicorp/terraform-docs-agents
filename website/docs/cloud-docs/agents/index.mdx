@@ -127,6 +127,24 @@ Agents are organized into pools, which can be managed in Terraform Cloud's UI. E
 
    ![Screenshot: Unable to delete an agent pool with attached workspace](/img/docs/agent-delete-invalid.png)
 
+### Scope an Agent Pool to Specific Workspaces
+
+Scoping an agent pool lets you specify which workspaces are allowed to use it. The agent pool will then only be available from within the chosen workspaces; it will not appear other workspace's lists of available agent pools. Scoping an agent pool does not remove it from workspaces that are actively using it. To remove access, you must first remove the agent pool from within the workspace's settings.
+
+To scope an agent pool to specific workspaces within the organization:
+
+1. Click **Settings** and then **Agents**. A list of agent pools for the organization appears.
+
+1. Click the name of the pool you would like to update.
+
+1. Click **Grant access to specific workspaces**. A menu opens where you can search for workspaces within this organization.
+
+1. Begin typing in the search field to find available workspaces and select the workspaces that should have access to the agent pool.
+
+1. Click **Save**.
+
+Now only the specified workspaces will be able to use the agent pool.
+
 ### Revoke an Agent Token
 
 You may revoke an issued token from your agents at any time.
