@@ -321,4 +321,4 @@ In markdown, images should be referenced by their absolute path, starting with `
 
 ## Redirects
 
-For now, redirects will need to be handled here: https://github.com/hashicorp/terraform-website/blob/master/redirects.next.js
+You must add a redirect when you move, rename, or delete documentation pages. Refer to https://github.com/hashicorp/terraform-website#redirects for details.
