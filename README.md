@@ -63,25 +63,29 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 [terraform-plugin-framework]: https://github.com/hashicorp/terraform-plugin-framework
 
 
-## Running the Site Locally
+## Previewing Changes
 
-### Using Docker
+You should preview your changes locally to ensure that the content is rendering properly before you create a pull request. The build includes content from this repository and the [`terraform-website`](https://github.com/hashicorp/terraform-website/) repository, allowing you to preview the entire Terraform documentation site.
 
-If you wish to run the site in a container, you can run the site locally via
-`make`.
+To preview your content, complete the following steps:
 
-- `make website`
-  - This command will pull and run the latest website container.
-  - This includes live reload which will load your changes as you make them.
-- `make website/local`
-  - This command will run the website locally using a locally built image
-  - This includes live reload which will load your changes as you make them.
-- `make website/build-local`
-  - This command will build a local image of the website from `hashicorp/dev-portal.git`.
+**Set Up Local Environment**
 
-...and then visit `http://localhost:3000`.
-There's no need to re-run `make website` each time the site is run, only the
-first time.
+1. [Install Docker](https://docs.docker.com/get-docker/).
+1. Restart your terminal or command line session.
+
+**Launch Site Locally**
+
+1. Navigate into your local `terraform-docs-agents` top-level directory and run `make website`. 
+1. Open `http://localhost:3000` in your web browser. While the preview is running, you can edit pages and Next.js will automatically rebuild them.
+1. When you're done with the preview, press `ctrl-C` in your terminal to stop the server.
+
+## Deployment
+
+The website reads content from release tags to generate documentation for all versions of `terraform-docs-agents` documentation. Changes merged into `main` are included in the documentation for the next product release.
+
+You cannot edit documentation for past versions of `terraform-docs-agents` on the site. Documentation is an artifact of a product release. We push docs fixes forward for the next release, rather than retroactively fixing older versions.
+
 
 <!-- BEGIN: editing-markdown -->
 <!-- Generated text, do not edit directly -->
@@ -317,4 +321,4 @@ In markdown, images should be referenced by their absolute path, starting with `
 
 ## Redirects
 
-For now, redirects will need to be handled here: https://github.com/hashicorp/terraform-website/blob/master/redirects.next.js
+You must add a redirect when you move, rename, or delete documentation pages. Refer to https://github.com/hashicorp/terraform-website#redirects for details.
