@@ -3,6 +3,8 @@
     "heading": "Terraform Cloud Agents"
   },
   { "title": "Overview", "path": "" },
+  { "title": "Requirements", "path": "requirements" },
+  { "title": "Install and Run Agents", "path": "agents" },
   { "title": "Telemetry", "path": "telemetry" },
   { "title": "Monitoring", "path": "monitoring" },
   { "title": "Hooks", "path": "hooks" },
