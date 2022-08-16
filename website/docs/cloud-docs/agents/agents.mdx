@@ -4,15 +4,34 @@ description: >-
   Install, configure, and run agents on your own infrastructure.
 ---
 
-# Managing Agents
+# Install and Run Agents
 
 The agent software runs on your own infrastructure. Agent pool membership is determined by which token you provide when starting the agent.
+
+
+## Operational Considerations
+
+The agent is distributed as a standalone binary which can be run on any supported system. By default, the agent will run in the foreground as a long-running process that will continuously poll for workloads from Terraform Cloud. We strongly recommend pairing the agent with a process supervisor to ensure that it is automatically restarted in case of an error.
+
+Agents do not guarantee a clean working environment per Terraform execution. Each execution is performed in its own temporary directory with a clean environment, but references to absolute file paths or other machine state may cause interference between Terraform executions. We strongly recommend that you write your Terraform code to be stateless and idempotent. You may also want to consider using [single-execution mode](#optional-configuration-single-execution-mode) to ensure your agent only runs a single workload.
 
 ## Download and Install the Agent
 
 1. Download the latest [agent release](https://releases.hashicorp.com/tfc-agent/), the associated checksum file (.SHA256sums), and the checksum signature (.sig).
 1. Verify the integrity of the downloaded archive, as well as the signature of the `SHA256SUMS` file using the instructions available on [HashiCorp's security page](https://www.hashicorp.com/security).
 1. Extract the release archive. The `unzip` utility is available on most Linux distributions and may be invoked as `unzip <archive file>`. Two individual binaries will be extracted (`tfc-agent` and `tfc-agent-core`). These binaries _must_ reside in the same directory for the agent to function properly.
+
+### Updating
+
+By default, the agent will automatically update itself to the latest minor version. Administrators are required to update the host operating system and all other installed software.
+
+To customize this update behavior, pass the flag `-auto-update` or set the environment variable `TFC_AGENT_AUTO_UPDATE`. The valid options are presented in the table below.
+
+| Update Setting | Behavior                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------ |
+| `minor`        | Matches the default behavior, automatically update the agent to the latest minor version.                    |
+| `patch`        | The agent will only be updated to the newest patch version, new minor versions will require a manual update. |
+| `disabled`     | Disables automatic updates, all updates will be manual.
 
 ## Start the Agent
 
@@ -59,7 +78,7 @@ USER tfc-agent
 
 An image customized in this way will permit installation of additional software via sudo apt-get.
 
-## Stopping the Agent
+## Stop the Agent
 
 The agent maintains a registration and a liveness indicator within Terraform Cloud during the entire course of its runtime. When an agent is to be retired, it must deregister itself from Terraform Cloud. The agent performs deregistration automatically as part of its shutdown procedure in the following scenarios:
 

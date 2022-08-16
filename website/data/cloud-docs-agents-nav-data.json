@@ -5,8 +5,9 @@
   { "title": "Overview", "path": "" },
   { "title": "Requirements", "path": "requirements" },
   { "title": "Install and Run Agents", "path": "agents" },
+  { "title": "Inject Custom Programs (Hooks)", "path": "hooks" },
+  { "title": "Manage Agent Pools", "path": "agent-pools" },
   { "title": "Telemetry", "path": "telemetry" },
   { "title": "Monitoring", "path": "monitoring" },
-  { "title": "Hooks", "path": "hooks" },
   { "title": "Changelog", "path": "changelog" }
 ]
