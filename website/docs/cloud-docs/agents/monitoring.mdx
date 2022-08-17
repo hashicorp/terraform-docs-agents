@@ -2,9 +2,13 @@
 page_title: Monitoring - Terraform Cloud Agents - Terraform Cloud and Terraform Enterprise
 ---
 
-# Monitoring
+# Monitor Log Output
 
-When running Terraform Cloud Agents, it may be useful to monitor some of its output.
+You may want to monitor Terraform Cloud Agent output.
+
+## View Agent Logs
+
+Output from the Terraform execution will be visible on the run’s page within Terraform Cloud. For more in-depth debugging, you may wish to view the agent’s logs, which are sent to `stdout` and configurable via the `-log-level` command line argument. By default, these logs are not persisted in any way. It is the responsibility of the operator to collect and store these logs if they are needed.
 
 ## Flash Messages
 

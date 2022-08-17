@@ -21,9 +21,9 @@ Agents do not guarantee a clean working environment per Terraform execution. Eac
 1. Verify the integrity of the downloaded archive, as well as the signature of the `SHA256SUMS` file using the instructions available on [HashiCorp's security page](https://www.hashicorp.com/security).
 1. Extract the release archive. The `unzip` utility is available on most Linux distributions and may be invoked as `unzip <archive file>`. Two individual binaries will be extracted (`tfc-agent` and `tfc-agent-core`). These binaries _must_ reside in the same directory for the agent to function properly.
 
-### Updating
+### Updates
 
-By default, the agent will automatically update itself to the latest minor version. Administrators are required to update the host operating system and all other installed software.
+By default, the agent automatically updates itself to the latest minor version. Administrators must update the host operating system and all other installed software.
 
 To customize this update behavior, pass the flag `-auto-update` or set the environment variable `TFC_AGENT_AUTO_UPDATE`. The valid options are presented in the table below.
 
@@ -33,21 +33,20 @@ To customize this update behavior, pass the flag `-auto-update` or set the envir
 | `patch`        | The agent will only be updated to the newest patch version, new minor versions will require a manual update. |
 | `disabled`     | Disables automatic updates, all updates will be manual.
 
-## Start the Agent
+## Start an Agent
 
-Using the Agent token you copied earlier, set the `TFC_AGENT_TOKEN` and `TFC_AGENT_NAME` environment variables.
+To start an agent and connect it to a Terraform Cloud agent pool:
+
+1. Retrieve the [token](/cloud-docs/agents/agent-pools#create-an-agent-pool) from the Terraform Cloud agent pool you want to use.
+1. Set the `TFC_AGENT_TOKEN` environment variable.
+1. (Optional) Set the `TFC_AGENT_NAME` environment variable. This name is for your reference only. The agent ID appears in logs and API requests.
 
 ```
 export TFC_AGENT_TOKEN=your-token
 export TFC_AGENT_NAME=your-agent-name
 ./tfc-agent
 ```
-
--> **Note:** The `TFC_AGENT_NAME` variable is optional. If you do not specify a name here, one will not be displayed. These names are for your reference only, and the agent ID is what will appear in logs and API requests.
-
-Once complete, your agent will appear on the Agents page and display its current status.
-
-![Screenshot: The Agents page with one connected agent in the idle state](/img/docs/agent-idle.png)
+Once complete, your agent and its status appear on the **Agents** page in the Terraform Cloud UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
 
 ### Optional Configuration: Running an Agent using Docker
 
@@ -94,3 +93,13 @@ It is highly recommended that the agent is only terminated using one of the abov
 The Agent can also be configured to run in single-execution mode, which will ensure that the Agent only runs a single workload, then terminates. This can be used in combination with Docker and a process supervisor to ensure a clean working environment for every Terraform run.
 
 To use single-execution mode, start the agent with the `-single` command line argument.
+
+## Run Multiple Agents
+
+You may choose to run multiple agents within your network, up to the organization's purchased agent limit. If there are multiple agents available within an organization, Terraform Cloud will select the first available agent within the target pool.
+
+Each agent process will run a single Terraform run at a time. Multiple agent processes can be concurrently run on a single instance, license limit permitting.
+
+## Resilience
+
+It is possible that an agent process could be terminated unexpectedly (due to killing the process forcefully, power cycling the host machine, etc.). We strongly recommend pairing the agent with a process supervisor to ensure that it is automatically restarted in case of an error.

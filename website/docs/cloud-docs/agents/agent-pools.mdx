@@ -4,49 +4,33 @@ description: >-
   TBD
 ---
 
-## Managing Agent Pools
+# Manage Agent Pools
 
-Agents are organized into pools, which can be managed in Terraform Cloud's UI. Each workspace can specify which agent pool should run its workloads.
+Agents are organized into pools in Terraform Cloud. Each workspace can specify which agent pool should run its workloads.
 
--> **Note:** You must be a member of the “Owners” team within your organization in order to manage an organization's agents in Terraform Cloud. ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+## Permissions
+
+You must be a member of the **Owners** team within your organization to manage an organization's agents. Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) in the Terraform Cloud documentation for details
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-### Create a new Agent Pool
+## Create an Agent Pool
 
-1. Navigate to **Organization Settings > Agents** and click "New agent pool".
+To create an agent pool:
 
-   ![Screenshot: The Agents page with no pools](/img/docs/agent-first-pool.png)
+1. Navigate to your organization's settings, select Agents**, and then click **Create agent pool**.
 
-1. Give your pool a name, then click "Continue". This name will be used to distinguish your pools when changing the settings of a workspace.
+1. Enter an **Agent Pool Name**, and then click **Continue**. Terraform Cloud uses this name to distinguish agent pools when you change a workspace's settings.
 
-   ![Screenshot: Step 1 of pool creation, naming the agent pool](/img/docs/agent-first-pool-name.png)
+1. Enter a token **Description**, and then click **Create Token**.
 
-1. Give your token a description and click "Create Token".
+1. Save your token information in a secure location. Terraform Cloud does not display the token again after you finish set up.
 
-   -> **Note:** Your token information will not be displayed again. Make sure to save it appropriately before moving to the final step.
+1. Click **Finish**.
 
-   ![Screenshot: Step 2 of pool creation, token creation](/img/docs/agent-first-pool-tokens.png)
+To connect an agent to this pool, [start an agent](/cloud-docs/agents/agents#start-the-agent) and provide it with the token for this agent pool.
 
-1. Click "Finish".
-
-### Delete an Agent Pool
-
-1. Navigate to **Organization Settings > Agents** and click on the name of the pool you would like to delete.
-
-1. Click "Delete agent pool".
-
-   ![Screenshot: Deleting an agent pool](/img/docs/agent-delete-valid.png)
-
-1. Confirm the deletion of the pool by clicking "Yes, delete agent pool".
-
-   ![Screenshot: Confirmation to delete an agent pool](/img/docs/agent-delete-valid-confirm.png)
-
-   ~> **Important:** Agent pools which are still associated with a workspace are unable to be deleted. To delete these pools, first ensure the related workspace has completed all in progress runs, and remove the association to the agent pool in **Workspace Settings > General Settings**.
-
-   ![Screenshot: Unable to delete an agent pool with attached workspace](/img/docs/agent-delete-invalid.png)
-
-### Scope an Agent Pool to Specific Workspaces
+## Scope an Agent Pool to Specific Workspaces
 
 Scoping an agent pool lets you specify which workspaces are allowed to use it. The agent pool will then only be available from within the chosen workspaces; it will not appear other workspace's lists of available agent pools. Scoping an agent pool does not remove it from workspaces that are actively using it. To remove access, you must first remove the agent pool from within the workspace's settings.
 
@@ -62,83 +46,74 @@ To scope an agent pool to specific workspaces within the organization:
 
 1. Click **Save**.
 
-Now only the specified workspaces will be able to use the agent pool.
+Only the specified workspaces can use the agent pool.
 
-### Revoke an Agent Token
 
-You may revoke an issued token from your agents at any time.
+## Configure Workspaces to use the Agent
 
-Revoking a token will cause the agents using it to exit. For agents to continue servicing workspace jobs, they must be reinitialized with a new token. Under normal circumstances, it may be desirable to generate a new token first, initialize the agents using it, then revoke the old token once no agents are using it. Agent tokens display information about the last time they were used to help you decide whether they are safe to revoke.
-
-1. Navigate to **Organization Settings > Agents**, then click on the agent pool you would like to manage.
-
-1. Click **"Revoke Token"** for the token you would like to revoke.
-
-   ![Screenshot: The Agent tokens list with the "Revoke Token" link highlighted](/img/docs/agent-revoke-token.png)
-
-1. Confirm the deletion of the token by clicking "Yes, delete token".
-
-   ![Screenshot: The "Revoke agent token" confirmation modal](/img/docs/agent-revoke-token-confirm.png)
-
-## Configuring Workspaces to use the Agent
-
--> **Note:** You must have “Admin” access to the workspace you are configuring to change the [execution mode](/cloud-docs/workspaces/settings#execution-mode). ([More about permissions.](/cloud-docs/users-teams-organizations/permissions))
+-> **Note:** You must have **Admin** access to a workspace before you can change its [execution mode](/cloud-docs/workspaces/settings#execution-mode). Refer to [Permmissions](/cloud-docs/users-teams-organizations/permissions) in the Terraform Cloud documentation for details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
-~> **Important:** Changing your workspace's [execution mode](/cloud-docs/workspaces/settings#execution-mode) after a run has already been planned will cause the run to error when it is applied.
-To minimize the number runs that error, you should disable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply),
-complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#1-the-pending-stage),
-and [lock](/cloud-docs/workspaces/settings#locking) your workspace before changing the execution mode.
+### Step 1: Manage Existing Runs
 
-To configure a workspace to execute runs using an agent:
+Changing a workspace's [execution mode](/cloud-docs/workspaces/settings#execution-mode) after Terraform has completed a plan causes that run to error during apply. To minimize the number runs that error, do the follwing in the workspace before changing the execution mode:
 
-1. Open the workspace from the main "Workspaces" view, then navigate to "Settings > General" from the dropdown menu.
-1. Select Agent as the [execution mode](/cloud-docs/workspaces/settings#execution-mode), as well as the agent pool
-   this workspace should use.
-1. Click "Save Settings" at the bottom of the page.
+1. Disable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).
+1. Wait for the workspace to complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#1-the-pending-stage).
+1. [Lock the workspace](/cloud-docs/workspaces/settings#locking) to prevent new runs.
 
-![Screenshot: The Workspace General settings page, with agent selected for execution mode](/img/docs/agent-execution-mode.png)
+### Step 2: Select Agent Pool
 
-### Run Details
+To configure the workspace to execute runs using an agent:
 
-Runs which are processed by an agent will have additional information about that agent in the details section of the run:
+1. Go to the workspace's **General Settings** page.
+1. Select **Agent** as the [execution mode](/cloud-docs/workspaces/settings#execution-mode), and select the agent pool this workspace should use.
+1. Click **Save Settings**.
 
-![Screenshot: Run details with agent information](/img/docs/agent-run-details.png)
+The workspace begins using the agent for Terraform runs. Runs involving an agent include information about that agent in the run details. Terraform Cloud may use different agents for the plan and apply operations, depending on agent availability within the pool.
 
--> **Note:** Different agents may be used for the plan and apply operations, depending on agent availability within the pool.
 
-### Running Multiple Agents
+## Revoke an Agent Token
 
-You may choose to run multiple agents within your network, up to the organization's purchased agent limit. If there are multiple agents available within an organization, Terraform Cloud will select the first available agent within the target pool.
+You may revoke an issued token from your agents at any time.
 
-Each agent process will run a single Terraform run at a time. Multiple agent processes can be concurrently run on a single instance, license limit permitting.
+Revoking a token causes the agents using it to exit. For agents to continue servicing workspace jobs, they must be reinitialized with a new token. Under normal circumstances, it may be desirable to generate a new token first, initialize the agents using it, then revoke the old token once no agents are using it. Agent tokens display information about the last time they were used to help you decide whether they are safe to revoke.
 
-#### Resilience
+1. Navigate to your organization's settings, select **Agents**, and then click the name of the agent pool you would like to manage.
 
-It is possible that an agent process could be terminated unexpectedly (due to killing the process forcefully, power cycling the host machine, etc.). We strongly recommend pairing the agent with a process supervisor to ensure that it is automatically restarted in case of an error.
+1. Click **Revoke Token** for the token you would like to revoke.
 
-(See **Agent Capacity Usage** below).
+1. Click **Yes, delete token** to confirm.
 
-## Troubleshooting
+## Delete an Agent Pool
 
-### Viewing Agent Statuses
+~> **Important:** You cannot delete an agent pool that is still associated with one or more workspaces.
 
-![Screenshot: Possible agent statuses](/img/docs/agent-statuses.png)
+To delete an agent pool:
 
-Agent status appear on the **Organization Settings > Agents** page and will contain one of these values:
+1. Wait for all associated workspaces to complete all in progress runs.
+1. Remove the agent pool from all associated workspaces.
+1. Navigate to your organization's settings, select Agents**, and then click the name of the agent pool you would like to delete.
+1. Click **Delete agent pool**.
+1. Click **Yes, delete agent pool** to confirm.
+
+
+## Viewing Agent Statuses
+
+Agent status appear on the **Organization Settings > Agents** page. Statuses can contain one of the following values:
 
 - **Idle**: The agent is running normally and waiting for jobs to be available.
 - **Busy**: The agent is running normally and currently executing a job.
 - **Unknown**: The agent has not reported any status for an unexpected period of time. The agent may yet recover if the agent's situation is temporary, such as a short-lived network partition.
-- **Errored**: The agent encountered an unrecoverable error or has been in an Unknown state for long enough that Terraform Cloud considers it errored. This may indicate that the agent process was interrupted, has crashed, a _permanent_ network partition exists, etc. If the agent was in the process of running an operation (such as a plan or apply), that operation has been marked as errored. If the current agent process does manage to recover, it will be instructed to exit immediately.
+- **Errored**: The agent encountered an unrecoverable error or has been in an Unknown state for long enough that Terraform Cloud considers it errored. This may indicate that the agent process was interrupted, has crashed, a _permanent_ network partition exists, etc. If the agent was in the process of running an operation (such as a plan or apply), that operation has been marked as errored. If the current agent process does manage to recover, it is instructed to exit immediately.
 - **Exited**: The agent exited normally, and has successfully informed Terraform of it doing so.
 
-### Agent Capacity Usage
+## Agent Capacity Usage
 
 Agents are considered active and count towards the organization's purchased agent capacity if they are in the **Idle**, **Busy**, or **Unknown** state. Agents which are in the **Errored** or **Exited** state do not count towards the organization's total agent capacity.
 
-The number of active agents you are eligible to deploy is determined by the number of Concurrent Runs your organization is entitled to. Agents are available as part of the [Terraform Cloud Business](https://www.hashicorp.com/products/terraform/pricing) tier.
+The number of active agents you are eligible to deploy is determined by the number of Concurrent Runs your organization is entitled to. Agents are available as part of [Terraform Cloud Business](https://www.hashicorp.com/products/terraform/pricing).
 
 Agents in the **Unknown** state continue to be counted against the organization's total agent allowance, as this status is typically an indicator of a temporary communication issue between the agent and Terraform Cloud. **Unknown** agents which do not respond after a period of 2 hours will automatically transition to an **Errored** state, at which point they will not count against the agent allowance.
 
@@ -146,6 +121,3 @@ Agents may have an **Unknown** status if they are terminated without gracefully 
 
 You can deregister agents that are **Unknown**, **Errored**, or **Exited** through either the **Organization Settings > Agents** page or through the [Agent API](/cloud-docs/api-docs/agents#delete-an-agent). Deregistered agents will no longer appear in settings page or count against the organization's agent allowance.
 
-### Viewing Agent Logs
-
-Output from the Terraform execution will be visible on the run’s page within Terraform Cloud. For more in-depth debugging, you may wish to view the agent’s logs, which are sent to `stdout` and configurable via the `-log-level` command line argument. By default, these logs are not persisted in any way. It is the responsibility of the operator to collect and store these logs if they are needed.
