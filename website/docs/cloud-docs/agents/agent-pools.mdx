@@ -126,7 +126,7 @@ The number of active agents you are eligible to deploy is determined by the numb
 
 Agents are considered active and count towards the organization's purchased agent capacity if they are in the **Idle**, **Busy**, or **Unknown** state. Agents that are in the **Errored** or **Exited** state do not count towards the organization's total agent capacity.
 
-Agents in the **Unknown** state continue to be counted against the organization's total agent allowance, as this status is typically an indicator of a temporary communication issue between the agent and Terraform Cloud. **Unknown** agents that do not respond after a period of 2 hours will automatically transition to an **Errored** state, at which point they will not count against the agent allowance.
+Agents in the **Unknown** state continue to be counted against the organization's total agent allowance, as this status is typically an indicator of a temporary communication issue between the agent and Terraform Cloud. **Unknown** agents that do not respond after a period of 2 hours will automatically transition to an **Errored** state, at which point they do not count against the agent allowance.
 
 Agents may have an **Unknown** status if they are terminated without gracefully exiting. Agents should always be shut down according to the [Stopping the Agent](#stopping-the-agent) section to allow them to deregister from Terraform Cloud. We strongly recommend ensuring that any process supervisor, application scheduler, or other runtime manager is configured to follow this procedure to minimize **Unknown** agent statuses.
 
