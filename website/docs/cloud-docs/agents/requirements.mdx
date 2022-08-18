@@ -1,15 +1,12 @@
 ---
 page_title: Terraform Cloud Agents - Requirements - Terraform Cloud and Terraform Enterprise
 description: >-
-  Cloud agents let Terraform manage isolated, private, or on-premises
-  infrastructure. Learn to install, configure, and manage cloud agents.
+  Supported operating systems, Terraform versions, hardware requirements, and networking requirements for Terraform Cloud Agents.
 ---
 
 # Requirements
 
-Ensure your system meets the following requirements before installing and configuring Terraform Cloud Agents.
-
--> **Note:** Refer to [Terraform Cloud Agents on TFE](/enterprise/admin/agents-on-tfe) for additional Terraform Enterprise requirements.
+Ensure your system meets the following requirements before installing and configuring Terraform Cloud Agents. Refer to [Terraform Cloud Agents on TFE](/enterprise/admin/agents-on-tfe) for additional Terraform Enterprise requirements.
 
 
 ## Supported Operating Systems
@@ -18,11 +15,11 @@ Ensure your system meets the following requirements before installing and config
 
 ## Supported Terraform Versions
 
-Agents support Terraform versions 0.12 and above. Workspaces configured to use Terraform versions below 0.12 will not be able to select the agent-based execution mode.
+Agents support Terraform versions 0.12 and above. Workspaces configured to use Terraform versions below 0.12 cannot select the agent-based execution mode.
 
 ## Hardware Requirements
 
-The host running the agent will have varying resource requirements depending on the workspace. A host can be a dedicated or shared cloud instance, virtual machine, bare metal server, or a container. You should monitor and adjust memory, CPU, and disk space based on each workspace's usage and performance. The name of your instance type may vary depending on your deployment environment.
+The host running the agent has varying resource requirements depending on the workspace. A host can be a dedicated or shared cloud instance, virtual machine, bare metal server, or a container. You should monitor and adjust memory, CPU, and disk space based on each workspace's usage and performance. The name of your instance type may vary depending on your deployment environment.
 
 You can use the specs below as a reference:
 
