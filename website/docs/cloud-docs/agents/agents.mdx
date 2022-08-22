@@ -92,7 +92,7 @@ To use single-execution mode, start the agent with the `-single` command line ar
 
 ## Stop the Agent
 
-~> **Important:** We strongly recommend that you only terminate the agent using one of these methods. Abruptly terminating an agent by forcefully stopping the process or power cycling the host does not let the agent deregister and results in an **Unknown** agent status. This may cause further [capacity issues](/cloud-docs/agents/agent-pools#agent-capacity-usage) for details.
+~> **Important:** We strongly recommend that you only terminate the agent using one of these methods. Abruptly terminating an agent by forcefully stopping the process or power cycling the host does not let the agent deregister and results in an **Unknown** agent status. Abrupt termination may cause further capacity issues. Refer to [capacity issues](/cloud-docs/agents/agent-pools#agent-capacity-usage) for details.
 
 The agent maintains a registration and a liveness indicator within Terraform Cloud during the entire course of its runtime. When an agent is to be retired, it must deregister itself from Terraform Cloud. The agent performs deregistration automatically as part of its shutdown procedure in the following scenarios:
 
