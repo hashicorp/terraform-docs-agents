@@ -118,7 +118,7 @@ Terraform Cloud shows status on the **Organization Settings > Agents** page. An 
 - **Busy**: The agent is running normally and currently executing a job.
 - **Unknown**: The agent has not reported any status for an unexpected period of time. The agent may yet recover if the agent's situation is temporary, such as a short-lived network partition.
 - **Errored**: The agent encountered an unrecoverable error or has been in an Unknown state for long enough that Terraform Cloud considers it errored. This status may indicate that something interrupted the agent process, the process crashed, a permanent network partition exists, or another similar problem. If the agent was in the process of running an operation (such as a plan or apply), the agent marks that operation as errored. If the current agent process recovers, it exits immediately.
-- **Exited**: The agent exited normally and has successfully informed Terraform of it doing so.
+- **Exited**: The agent exited normally and successfully informed Terraform of it doing so.
 
 ## Agent Capacity Usage
 
