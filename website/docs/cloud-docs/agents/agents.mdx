@@ -20,7 +20,7 @@ Each agent process runs a single Terraform run at a time. Multiple agent process
 
 ### Resilience
 
-The agent is distributed as a standalone binary which can be run on any supported system. By default, the agent will run in the foreground as a long-running process that will continuously poll for workloads from Terraform Cloud. It is possible that an agent process could be terminated unexpectedly, due to stopping the process forcefully, power cycling the host machine, and other methods. We strongly recommend pairing the agent with a process supervisor to ensure that it is automatically restarted in case of an error.
+The agent distributes as a standalone binary that runs on any supported system. By default, the agent runs in the foreground as a long-running process that continuously polls for workloads from Terraform Cloud. An agent process may terminate unexpectedly due to stopping the process forcefully, power cycling the host machine, and other methods. We strongly recommend pairing the agent with a process supervisor to ensure that it automatically restarts in case of an error.
 
 ## Download and Install the Agent
 
