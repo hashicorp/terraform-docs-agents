@@ -65,7 +65,7 @@ docker run -e TFC_AGENT_TOKEN=your-token -e
 TFC_AGENT_NAME=your-agent-name hashicorp/tfc-agent
 ```
 
-This Docker image executes the tfc-agent process as the non-root tfc-agent user. For some workflows, such as those that require the ability to install software via apt-get during local-exec scripts, you may need to build a customized version of the agent Docker image for your internal use.
+This Docker image executes the `tfc-agent` process as the non-root `tfc-agent` user. For some workflows, such as workflows requiring the ability to install software using `apt-get` during `local-exec` scripts, you may need to build a customized version of the agent Docker image for your internal use.
 
 ```Dockerfile
 FROM hashicorp/tfc-agent:latest
