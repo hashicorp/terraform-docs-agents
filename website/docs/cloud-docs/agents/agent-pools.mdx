@@ -68,7 +68,7 @@ Use the following steps to configure a workspace to use an agent pool.
 
 ### Step 1: Manage Existing Runs
 
-Changing a workspace's [execution mode](/cloud-docs/workspaces/settings#execution-mode) after Terraform has completed a plan causes that run to error during apply. To minimize these errors, do the following in the workspace before you change the execution mode:
+Changing a workspace's [execution mode](/cloud-docs/workspaces/settings#execution-mode) after Terraform completes a plan causes that run to error during apply. To minimize these errors, do the following in the workspace before you change the execution mode:
 
 1. Disable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).
 1. Wait for the workspace to complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#1-the-pending-stage).
