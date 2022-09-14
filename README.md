@@ -62,6 +62,11 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 [terraform-plugin-mux]: https://github.com/hashicorp/terraform-plugin-mux
 [terraform-plugin-framework]: https://github.com/hashicorp/terraform-plugin-framework
 
+## Deployment
+
+The website reads content from release tags to generate documentation for all versions of `terraform-docs-agents` documentation. Changes merged into `main` will be included in the documentation for the next product release.
+
+You cannot edit documentation for past versions of `terraform-docs-agents` on the site. Documentation is an artifact of a product release. We push docs fixes forward for the next release, rather than retroactively fixing older versions.
 
 ## Previewing Changes
 
