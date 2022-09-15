@@ -1,10 +1,16 @@
 ---
-page_title: Monitoring - Terraform Cloud Agents - Terraform Cloud and Terraform Enterprise
+page_title: Logging - Terraform Cloud Agents - Terraform Cloud and Terraform Enterprise
+description: >-
+  Monitor agent log output and flash messages from HashiCorp that communicate important changes.
 ---
 
-# Monitoring
+# Logging
 
-When running Terraform Cloud Agents, it may be useful to monitor some of its output.
+You may want to monitor Terraform Cloud Agent output.
+
+## Agent Logs
+
+Output from the Terraform execution is available on the run details page in Terraform Cloud. For more in-depth debugging, you may wish to view the agent’s logs, which are sent to `stdout` and configurable via the `-log-level` command line argument. By default, the agent does not persist these logs in any way. You must collect and store these logs if necessary.
 
 ## Flash Messages
 
