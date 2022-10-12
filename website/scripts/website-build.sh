@@ -46,4 +46,4 @@ PREVIEW_MODE=$PREVIEW_MODE \
 REPO=$PRODUCT \
 LOCAL_CONTENT_DIR=$LOCAL_CONTENT_DIR \
 CURRENT_GIT_BRANCH=$CURRENT_GIT_BRANCH \
-npm run build:deploy-previe
+npm run build:deploy-preview
