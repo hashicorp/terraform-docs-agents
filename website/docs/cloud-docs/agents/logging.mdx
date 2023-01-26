@@ -6,11 +6,70 @@ description: >-
 
 # Logging
 
-You may want to monitor Terraform Cloud Agent output.
+Terraform Cloud Agents log helpful messages which enable operators to understand
+agent behavior, including communication with Terraform Cloud APIs, specific
+commands run and actions taken, and runtime management.
 
-## Agent Logs
+## Log output
 
-Output from the Terraform execution is available on the run details page in Terraform Cloud. For more in-depth debugging, you may wish to view the agent’s logs, which are sent to `stdout` and configurable via the `-log-level` command line argument. By default, the agent does not persist these logs in any way. You must collect and store these logs if necessary.
+Terraform Cloud Agents write log messages directly to stdout/stderr. This
+provides flexibility to the operator for capturing the logs in a variety of
+different logging systems, and a very simple experience for CLI users who wish
+to see a log of the agent's behavior directly in their terminal. By default,
+the agent does not automatically persist the log output in any way. The user
+must direct the log output to a file or collect them with a process or
+container supervisor if persistence is required.
+
+## Log verbosity and levels
+
+The volume of logs and the level of detail they contain are controlled by log
+levels. There are 5 levels supported by the agent:
+
+* `error` contains only critical error messages. The agent process is otherwise
+  silent.
+* `warn` contains all error-level messages, as well as informational messages
+  such as system messages directly from the Terraform Cloud platform.
+* `info` contains all warn-level messages and high-level information about the
+  agent and the workflows it is executing. In normal circumstances, this is
+  the safest and most helpful log level for day to day operation.
+* `debug` contains all info-level messages, plus additional informational
+  messages which provide further context about behavior, data, and events.
+* `trace` contains all debug-level messages, plus verbose process logs such as
+  the line-by-line output of the `terraform` command.
+
+## Data format
+
+By default, Terraform Cloud Agents emit log lines in a human-friendly text
+format. This is convenient for running the tfc-agent locally and streaming the
+logs directly to a terminal, or for use in log systems where raw logs are
+consumed directly by operators. The default text format looks something like
+the following:
+
+```
+2023-01-26T13:45:02.502-0800 [INFO]  core: Job received: job.type=plan job.id=run-xxx
+```
+
+It is also possible to configure the Terraform Cloud Agent to produce JSON-
+formatted logs. This format will cause each log line to be serialized as an
+individual JSON object, and is more ideal for logging systems which are capable
+of parsing and performing post-processing on log data for each line. JSON
+logging mode is enabled by passing the `-log-json` CLI flag, or setting the
+environment variable `TFC_AGENT_LOG_JSON=1`. The JSON format contains additional
+verbose information in each log message, and looks something like this:
+
+```
+{"@level":"info","@message":"Job received","@module":"core","@timestamp":"2023-01-26T13:47:20.637933-08:00","agent.id":"agent-xxx","agent.pool.id":"apool-xxx","agent.version":"1.6.0","job.id":"run-xxx","job.type":"plan"}
+```
+
+## Log data sensitivity
+
+Log levels have a progressive level of data sensitivy. The `info`, `warn`, and
+`error` levels are considered generally safe for log collection and don't
+include sensitive information. The `debug` log level may include internal
+system details, such as specific commands and arguments including paths to user
+data on the local filesystem.  The `trace` log level is the most sensitive and
+may include personally identifiable information, secrets, pre-authorized
+internal URLs, and other sensitive material.
 
 ## Flash Messages
 
