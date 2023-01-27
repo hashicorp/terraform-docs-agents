@@ -45,6 +45,19 @@ distribution. The `contrib` distribution is available as a pre-packaged
 Docker container labeled
 [otel/opentelemetry-collector-contrib](https://hub.docker.com/r/otel/opentelemetry-collector-contrib).
 
+## Compatibility
+
+Each released version of the Terraform Cloud Agent ships with a specific version
+of the OpenTelemetry client libraries built in. As these libraries and
+implementations change, it is possible that certain versions of the agent will
+become incompatible with newer versions of the OpenTelemetry collector. To
+track version compatibility, the table below will be updated whenever these
+version constraints become known.
+
+| Terraform Cloud Agent version | Compatible OpenTelemetry Collector version |
+| ----------------------------- | ------------------------------------------ |
+| All versions                  | <= 0.48.0                                  |
+
 ### Running the collector
 
 By default, the `contrib` distribution accepts telemetry from a wide variety of
