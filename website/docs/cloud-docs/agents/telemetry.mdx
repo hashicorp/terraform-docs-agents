@@ -33,6 +33,51 @@ The agent will use a certificate at the path supplied to encrypt the client
 connection to the OpenTelemetry collector. When omitted, client connections are
 not secured.
 
+## OpenTelemetry Collector
+
+The OpenTelemetry Collector has a pluggable architecture. This opens up the
+ecosystem and makes it possible to leverage a wide array of telemetry platforms
+and technologies. The OpenTelemetry project distributes the collector in two
+flavors: `core` and `contrib`. For most uses, the `contrib` distribution will
+be most useful, as it includes a wide array of integrations for specific
+telemetry platforms and technologies which are not available in the `core`
+distribution. The `contrib` distribution is available as a pre-packaged
+Docker container labeled
+[otel/opentelemetry-collector-contrib](https://hub.docker.com/r/otel/opentelemetry-collector-contrib).
+
+### Running the collector
+
+By default, the `contrib` distribution accepts telemetry from a wide variety of
+sources, and dumps information about the metrics and traces collected to stdout.
+To start the collector with default settings, run the following command:
+
+```
+docker run -p 127.0.0.1:4317:4317/tcp otel/opentelemetry-collector-contrib:latest
+```
+
+This will start an OpenTelemetry collector, and expose the gRPC interface (which
+the Terraform Cloud Agent can talk to) on port 4317 of the local machine.
+
+### Configuring the collector
+
+The OpenTelemetry collector takes configuration in the form of a YAML file. It
+may be useful to refer to the default YAML configuration file as a starting
+point for your own configuration. Its source may be found
+[here](https://github.com/open-telemetry/opentelemetry-collector-releases/blob/main/configs/otelcol-contrib.yaml).
+
+To tweak the configuration, save your custom YAML configuration to a file on
+disk called `collector.yaml`, and run the collector container with the
+following command:
+
+```
+docker run \
+  --mount type=bind,source=${PWD}/collector.yml,target=/etc/otelcol-contrib/config.yaml \
+  -p 127.0.0.1:4317:4317/tcp \
+  otel/opentelemetry-collector-contrib:latest
+```
+
+The collector should start with your modified configuration.
+
 ## Tracing
 
 The agent emits tracing spans which are useful in understanding and debugging
