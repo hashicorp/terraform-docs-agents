@@ -65,7 +65,7 @@ sources, and dumps information about the metrics and traces collected to stdout.
 To start the collector with default settings, run the following command:
 
 ```
-docker run -p 127.0.0.1:4317:4317/tcp otel/opentelemetry-collector-contrib:latest
+docker run -p 127.0.0.1:4317:4317/tcp otel/opentelemetry-collector-contrib:0.42.0
 ```
 
 This will start an OpenTelemetry collector, and expose the gRPC interface (which
@@ -86,7 +86,7 @@ following command:
 docker run \
   --mount type=bind,source=${PWD}/collector.yml,target=/etc/otelcol-contrib/config.yaml \
   -p 127.0.0.1:4317:4317/tcp \
-  otel/opentelemetry-collector-contrib:latest
+  otel/opentelemetry-collector-contrib:0.42.0
 ```
 
 The collector should start with your modified configuration.
