@@ -55,6 +55,25 @@ export TFC_AGENT_NAME=your-agent-name
 ```
 Once complete, your agent and its status appear on the **Agents** page in the Terraform Cloud UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
 
+## Options
+
+| Option | Usage |
+|---|---|
+| name | An optional user-specified name for the agent. This name may be used in the Terraform Cloud user interface to help easily identify the agent. <br><br>Syntax: `-name <name>`<br>Default: The agent's ephemeral ID, assigned during boot. <br>Environment variable: `TFC_AGENT_NAME` |
+| log-level | The log verbosity expressed as a level string. Level options include "trace", "debug", "info", "warn", and "error". Log levels have a progressive level of data sensitivy. The "info", "warn", and "error" levels are considered generally safe for log collection and don't include sensitive information. The "debug" log level may include internal system details, such as specific commands and arguments including paths to user data on the local filesystem.  The "trace" log level is the most sensitive and may include personally identifiable information, secrets, pre-authorized internal URLs, and other sensitive material.<br><br>Syntax: `-log-level <level>`<br>Default: info<br>Environment variable: `TFC_AGENT_LOG_LEVEL` |
+| log-json | Enable JSON logging mode.<br><br>Syntax: `-log-json`<br>Default: false<br>Environment variable: `TFC_AGENT_LOG_JSON` |
+| data-dir | The path to a directory to store all agent-related data, including Terraform configurations, cached Terraform release archives, etc. It is important to ensure that the given directory is backed by plentiful storage.<br><br>Syntax: `-data-dir <path>`<br>Default: ~/.tfc-agent<br>Environment variable: `TFC_AGENT_DATA_DIR` |
+| cache-dir | The path to a directory to store all agent-related cache data, including cached Terraform release archives, policy binaries, etc. It is important to ensure that the given directory is backed by plentiful storage.<br><br>Syntax: `-cache-dir <path>`<br>Default: <data-dir>/cache<br>Environment variable: `TFC_AGENT_CACHE_DIR` |
+| single | Enable single mode. This causes the agent to handle at most one job and immediately exit thereafter. Useful for running agents as ephemeral containers, VMs, or other isolated contexts with a higher-level scheduler or process supervisor.<br><br>Syntax: `-single`<br>Default: false<br>Environment variable: `TFC_AGENT_SINGLE` |
+| auto-update | Controls automatic core updates behavior. Acceptable values include "disabled", "patch", and "minor".<br><br>Syntax: `-auto-update`<br>Default: minor<br>Environment variable: `TFC_AGENT_AUTO_UPDATE` |
+| address | The HTTP or HTTPS address of the Terraform Cloud API.<br><br>Syntax: `-address`<br>Default: https://app.terraform.io<br>Environment variable: `TFC_ADDRESS` |
+| token | The agent token to use when making requests to the Terraform Cloud API. This token must be obtained from the API or UI.  It is recommended to use the environment variable whenever possible for configuring this setting due to the sensitive nature of API tokens.<br><br>Syntax: `-token <token>`<br>Default: Required, no default<br>Environment variable: `TFC_AGENT_TOKEN` |
+| otlp-address | Optional host:port address of an OpenTelemetry collector to send telemetry data to, including metrics and tracing. Currently the agent connects to this address using the gRPC protocol.<br><br>Syntax: `-otlp-address <addr>`<br>Default: none<br>Environment variable: `TFC_AGENT_OTLP_ADDRESS` |
+| otlp-cert-file | Optional path to a client TLS certificate file to load. When present, the given certificate is used to encrypt the client connection to the OpenTelemetry collector. When omitted, client connections are not secure.<br><br>Syntax: `-otlp-cert-file <path>`<br>Default: none<br>Environment variable: `TFC_AGENT_OTLP_CERT_FILE` |
+| accept | Optional string of comma-separated job types that this agent may run. Acceptable job types are "plan", "apply", "policy", and "assessment". Do not put whitespace inbetween entries.<br><br>Syntax: `-accept <job_types>`<br>Default: plan,apply,policy,assessment<br>Environment variable: `TFC_AGENT_ACCEPT` |
+| h | Display the help message of the TFC agent binary.<br><br>Syntax: `-h`<br>Default: Not Applicable<br>Environment variable: Not Applicable |
+| v | Display the version of the TFC agent binary.<br><br>Syntax: `-v`<br>Default: Not Applicable<br>Environment variable: Not Applicable |
+
 ### Optional Configuration: Run an Agent Using Docker
 
 Alternatively, you can use our official agent Docker container to run the agent.
