@@ -73,7 +73,9 @@ USER root
 
 # Install sudo. The container runs as a non-root user, but people may rely on
 # the ability to apt-get install things.
-RUN apt-get -y install sudo
+RUN apt-get update -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install sudo --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
 # Permit tfc-agent to use sudo apt-get commands.
 RUN echo 'tfc-agent ALL=NOPASSWD: /usr/bin/apt-get , /usr/bin/apt' >> /etc/sudoers.d/50-tfc-agent
