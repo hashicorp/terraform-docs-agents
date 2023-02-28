@@ -18,7 +18,7 @@ The agent architecture is pull-based, so no inbound connectivity is required. An
 ## Terraform Enterprise
 
 Terraform Enterprise supports Terraform Cloud Agents. Refer to
-[Terraform Cloud Agents on TFE](/enterprise/admin/agents-on-tfe) for Terraform Enterprise specific documentation and requirements.
+[Terraform Cloud Agents on TFE](/terraform/enterprise/admin/agents-on-tfe) for Terraform Enterprise specific documentation and requirements.
 
 ## Limitations
 
@@ -27,7 +27,7 @@ Agents allow you to run Terraform operations from a Terraform Cloud workspace on
 - Connecting to private infrastructure from Sentinel policies using the [http import](https://docs.hashicorp.com/sentinel/imports/http).
 - Connecting Terraform Cloud workspaces to VCS instances that do not allow access from the public internet. For example, you cannot use agents to connect to a GitHub Enterprise Server instance that requires access to your VPN.
 
-For these use cases, we recommend you leverage the information provided by the [IP Ranges documentation](/cloud-docs/architectural-details/ip-ranges) to permit direct communication from the appropriate Terraform Cloud service to your internal infrastructure.
+For these use cases, we recommend you leverage the information provided by the [IP Ranges documentation](/terraform/cloud-docs/architectural-details/ip-ranges) to permit direct communication from the appropriate Terraform Cloud service to your internal infrastructure.
 
 
 
