@@ -13,9 +13,9 @@ Terraform Cloud organizes agents into pools. Each workspace can specify which ag
 Managing agent pools requires the following permissions:
 
 - You must be a member of the **Owners** team within your organization to manage an organization's agents.
-- You must have **Admin** access to a workspace before you can change its [execution mode](/cloud-docs/workspaces/settings#execution-mode) to use an agent pool.
+- You must have **Admin** access to a workspace before you can change its [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use an agent pool.
 
-Refer to [Permissions](/cloud-docs/users-teams-organizations/permissions) in the Terraform Cloud documentation for details.
+Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) in the Terraform Cloud documentation for details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -33,7 +33,7 @@ To create an agent pool:
 
 1. Click **Finish**.
 
-To connect an agent to this pool, [start an agent](/cloud-docs/agents/agents#start-an-agent) and provide it with the token for this agent pool.
+To connect an agent to this pool, [start an agent](/terraform/cloud-docs/agents/agents#start-an-agent) and provide it with the token for this agent pool.
 
 ## Scope an Agent Pool to Specific Workspaces
 
@@ -62,18 +62,18 @@ Use the following steps to configure a workspace to use an agent pool.
 
 ### Step 1: Manage Existing Runs
 
-Changing a workspace's [execution mode](/cloud-docs/workspaces/settings#execution-mode) after Terraform completes a plan causes that run to error during apply. To minimize these errors, do the following in the workspace before you change the execution mode:
+Changing a workspace's [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) after Terraform completes a plan causes that run to error during apply. To minimize these errors, do the following in the workspace before you change the execution mode:
 
-1. Disable [auto-apply](/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).
-1. Wait for the workspace to complete any runs that are no longer in the [pending stage](/cloud-docs/run/states#1-the-pending-stage).
-1. [Lock the workspace](/cloud-docs/workspaces/settings#locking) to prevent new runs.
+1. Disable [auto-apply](/terraform/cloud-docs/workspaces/settings#auto-apply-and-manual-apply).
+1. Wait for the workspace to complete any runs that are no longer in the [pending stage](/terraform/cloud-docs/run/states#1-the-pending-stage).
+1. [Lock the workspace](/terraform/cloud-docs/workspaces/settings#locking) to prevent new runs.
 
 ### Step 2: Select Agent Pool
 
 To configure the workspace to execute runs using an agent:
 
 1. Go to the workspace's **General Settings** page.
-1. Select **Agent** as the [execution mode](/cloud-docs/workspaces/settings#execution-mode), and select the agent pool this workspace should use.
+1. Select **Agent** as the [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode), and select the agent pool this workspace should use.
 1. Click **Save Settings**.
 
 The workspace begins using the agent for Terraform runs. Runs involving an agent include information about that agent in the run details. Terraform Cloud may use different agents for the plan and apply operations, depending on agent availability within the pool.
@@ -126,5 +126,5 @@ Agents in the **Unknown** state continue to count against the organization's tot
 
 Agents may have an **Unknown** status if they terminate without gracefully exiting. Agents should always be shut down according to the [Stopping the Agent](#stopping-the-agent) section to allow them to deregister from Terraform Cloud. To minimize **Unknown** agent statuses, we strongly recommend configuring any process supervisor, application scheduler, or other runtime manager to follow this procedure.
 
-You can deregister agents that are **Unknown**, **Errored**, or **Exited** through either the **Organization Settings > Agents** page or through the [Agent API](/cloud-docs/api-docs/agents#delete-an-agent). Deregistered agents no longer appear in the settings page or count against the organization's agent allowance.
+You can deregister agents that are **Unknown**, **Errored**, or **Exited** through either the **Organization Settings > Agents** page or through the [Agent API](/terraform/cloud-docs/api-docs/agents#delete-an-agent). Deregistered agents no longer appear in the settings page or count against the organization's agent allowance.
 
