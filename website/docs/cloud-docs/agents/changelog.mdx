@@ -10,11 +10,21 @@ within each release are categorized into one or more of the following labels:
 * `FEATURES` - Used for net-new features being added to the agent.
 * `BUG FIXES` - Backward-compatible fixes for buggy functionality.
 * `IMPROVEMENTS` - Functional improvements to performance, effeciency, etc.
-* `SECURITY FIXES` - Fixes for security-related issues.
+* `SECURITY` - Fixes for security-related issues.
 * `BREAKING CHANGES` - Reserved for changes which break previous functionality.
 
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
+
+## 1.7.0 (03/02/2023)
+
+FEATURES:
+
+* Added support for dynamic provider credentials (#328)
+
+BUG FIXES:
+
+* Fixed exit code during startup errors (#335)
 
 ## 1.6.1 (02/23/2023)
 
@@ -163,7 +173,7 @@ BUG FIXES:
 
 ## 1.1.3 (03/17/2022)
 
-SECURITY FIXES:
+SECURITY:
 
 * Updated Docker image to address OpenSSL CVE-2022-0778 (#129)
 
@@ -216,7 +226,7 @@ BREAKING CHANGES:
 * Changed logging to only include Terraform output at trace level (#88)
 * Removed deprecated `-disable-update` and `TFC_AGENT_DISABLE_UPDATE` (#95)
 
-SECURITY FIXES:
+SECURITY:
 
 * Removed all SUID/SGID binaries from the Docker container (#91)
 
@@ -279,7 +289,7 @@ BREAKING CHANGES:
 
 * Changed the user in the Docker container to be non-root (#56)
 
-SECURITY FIXES:
+SECURITY:
 
 * Changed the user in the Docker container to be non-root (#56)
 
@@ -359,7 +369,7 @@ BUG FIXES:
 
 ## 0.1.7 (01/07/2021)
 
-SECURITY FIXES:
+SECURITY:
 
 * Removed access to tfc-agent configuration env vars after agent boot up (#28)
 
