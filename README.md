@@ -1,4 +1,5 @@
 # terraform-docs-agents
+
 Content for Terraform's agents documentation.
 
 - https://terraform.io/cloud-docs/agents
@@ -14,25 +15,25 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 
 ## Where the Docs Live
 
-| Subpath | Repository |
-| :--- | :--- |
-| [`/cdktf`][cdktf]                         | [terraform-cdk] |
-| [`/cli`][cli]                             | [terraform] |
-| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common] |
-| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents] |
-| [`/configuration`][configuration]         | [terraform] |
-| [`/docs`][docs]                           | [terraform] |
-| [`/enterprise`][enterprise]               | [terraform-website] |
-| [`/guides`][guides]                       | [terraform] |
-| [`/internals`][internals]                 | [terraform] |
-| [`/intro`][intro]                         | [terraform] |
-| [`/language`][language]                   | [terraform] |
-| [`/plugin`][plugin]                       | [terraform-docs-common] |
+| Subpath                                   | Repository                   |
+| :---------------------------------------- | :--------------------------- |
+| [`/cdktf`][cdktf]                         | [terraform-cdk]              |
+| [`/cli`][cli]                             | [terraform]                  |
+| [`/cloud-docs`][cloud-docs]               | [terraform-docs-common]      |
+| [`/cloud-docs/agents`][cloud-docs/agents] | [terraform-docs-agents]      |
+| [`/configuration`][configuration]         | [terraform]                  |
+| [`/docs`][docs]                           | [terraform]                  |
+| [`/enterprise`][enterprise]               | [terraform-website]          |
+| [`/guides`][guides]                       | [terraform]                  |
+| [`/internals`][internals]                 | [terraform]                  |
+| [`/intro`][intro]                         | [terraform]                  |
+| [`/language`][language]                   | [terraform]                  |
+| [`/plugin`][plugin]                       | [terraform-docs-common]      |
 | [`/plugin/framework`][plugin/framework]   | [terraform-plugin-framework] |
-| [`/plugin/log`][plugin/log]               | [terraform-plugin-log] |
-| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux] |
-| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk] |
-| [`/registry`][registry]                   | [terraform-docs-common] |
+| [`/plugin/log`][plugin/log]               | [terraform-plugin-log]       |
+| [`/plugin/mux`][plugin/mux]               | [terraform-plugin-mux]       |
+| [`/plugin/sdkv2`][plugin/sdkv2]           | [terraform-plugin-sdk]       |
+| [`/registry`][registry]                   | [terraform-docs-common]      |
 
 [cdktf]: https://www.terraform.io/cdktf
 [cli]: https://www.terraform.io/cli
@@ -51,7 +52,6 @@ If you find a typo or you feel like you can improve the HTML, CSS, or JavaScript
 [plugin/mux]: https://www.terraform.io/plugin/mux
 [plugin/sdkv2]: https://www.terraform.io/plugin/sdkv2
 [registry]: https://www.terraform.io/registry
-
 [terraform-cdk]: https://github.com/hashicorp/terraform-cdk
 [terraform]: https://github.com/hashicorp/terraform
 [terraform-website]: https://github.com/hashicorp/terraform-cdk
@@ -81,7 +81,7 @@ To preview your content, complete the following steps:
 
 **Launch Site Locally**
 
-1. Navigate into your local `terraform-docs-agents` top-level directory and run `make website`. 
+1. Navigate into your local `terraform-docs-agents` top-level directory and run `make website`.
 1. Open `http://localhost:3000` in your web browser. While the preview is running, you can edit pages and Next.js will automatically rebuild them.
 1. When you're done with the preview, press `ctrl-C` in your terminal to stop the server.
 
@@ -90,7 +90,6 @@ To preview your content, complete the following steps:
 The website reads content from release tags to generate documentation for all versions of `terraform-docs-agents` documentation. Changes merged into `main` are included in the documentation for the next product release.
 
 You cannot edit documentation for past versions of `terraform-docs-agents` on the site. Documentation is an artifact of a product release. We push docs fixes forward for the next release, rather than retroactively fixing older versions.
-
 
 <!-- BEGIN: editing-markdown -->
 <!-- Generated text, do not edit directly -->
@@ -107,10 +106,9 @@ This file can be standard Markdown and also supports [YAML frontmatter](https://
 
 ```yaml
 ---
-title: 'My Title'
+title: "My Title"
 description: "A thorough, yet succinct description of the page's contents"
 ---
-
 ```
 
 The significant keys in the YAML frontmatter are:
@@ -119,6 +117,16 @@ The significant keys in the YAML frontmatter are:
 - `description` `(string)` - This is a description of the page that will be set in the HTML description.
 
 > ⚠️ If there is a need for a `/api/*` url on this website, the url will be changed to `/api-docs/*`, as the `api` folder is reserved by next.js.
+
+## Validating Content
+
+Content changes are automatically validated against a set of rules as part of the pull request process. If you want to run these checks locally to validate your content before committing your changes, you can run the following command:
+
+```
+npm run content-check
+```
+
+If the validation fails, actionable error messages will be displayed to help you address detected issues.
 
 ### Creating New Pages
 
