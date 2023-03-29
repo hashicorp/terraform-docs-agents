@@ -99,3 +99,135 @@ The agent maintains a registration and a liveness indicator within Terraform Clo
 - The agent process ID receives one of `SIGINT`, `SIGTERM`, or `SIGQUIT`. It is important to send only one signal. The agent interprets a second signal as forceful termination signal exits immediately.
 
 After initiating a graceful shutdown by either of these methods, the terminal user or parent program should wait for the agent to exit. The amount of time this exit takes depends on the agent's current workload. The agent waits for any current operations to complete before deregistering and exiting.
+
+# CLI Options
+
+
+* `-name <name>`:
+    An optional user-specified name for the agent. This name may be used in
+    the Terraform Cloud user interface to help easily identify the agent.
+
+    Default: `The agent's ephemeral ID, assigned during boot.`
+
+    Environment variable: `TFC_AGENT_NAME`
+
+
+* `-log-level <level>`:
+    The log verbosity expressed as a level string. Level options include
+    "trace", "debug", "info", "warn", and "error". Log levels have a
+    progressive level of data sensitivy. The "info", "warn", and "error" levels
+    are considered generally safe for log collection and don't include
+    sensitive information. The "debug" log level may include internal system
+    details, such as specific commands and arguments including paths to user
+    data on the local filesystem.  The "trace" log level is the most sensitive
+    and may include personally identifiable information, secrets,
+    pre-authorized internal URLs, and other sensitive material.
+
+    Default: `info`
+
+    Environment variable: `TFC_AGENT_LOG_LEVEL`
+
+
+* `-log-json`:
+    Enable JSON logging mode.
+
+    Default: `false`
+
+    Environment variable: `TFC_AGENT_LOG_JSON`
+
+
+* `-data-dir <path>`:
+    The path to a directory to store all agent-related data, including
+    Terraform configurations, cached Terraform release archives, etc. It is
+    important to ensure that the given directory is backed by plentiful
+    storage.
+
+    Default: `~/.tfc-agent`
+
+    Environment variable: `TFC_AGENT_DATA_DIR`
+
+
+* `-cache-dir <path>`:
+    The path to a directory to store all agent-related cache data, including
+    cached Terraform release archives, policy binaries, etc. It is important to
+    ensure that the given directory is backed by plentiful storage.
+
+    Default: `<data-dir>/cache`
+
+    Environment variable: `TFC_AGENT_CACHE_DIR`
+
+
+* `-single`:
+    Enable single mode. This causes the agent to handle at most one job and
+    immediately exit thereafter. Useful for running agents as ephemeral
+    containers, VMs, or other isolated contexts with a higher-level scheduler
+    or process supervisor.
+
+    Default: `false`
+
+    Environment variable: `TFC_AGENT_SINGLE`
+
+
+* `-auto-update`:
+    Controls automatic core updates behavior. Acceptable values include
+    "disabled", "patch", and "minor".
+
+    Default: `minor`
+
+    Environment variable: `TFC_AGENT_AUTO_UPDATE`
+
+
+* `-address <addr>`:
+    The HTTP or HTTPS address of the Terraform Cloud API.
+
+    Default: `https://app.terraform.io`
+
+    Environment variable: `TFC_ADDRESS`
+
+
+* `-token <token>`:
+    The agent token to use when making requests to the Terraform Cloud API.
+    This token must be obtained from the API or UI.  It is recommended to use
+    the environment variable whenever possible for configuring this setting due
+    to the sensitive nature of API tokens.
+
+    Required, no default.
+    Environment variable: `TFC_AGENT_TOKEN`
+
+
+* `-otlp-address <addr>`:
+    Optional host:port address of an OpenTelemetry collector to send telemetry
+    data to, including metrics and tracing. Currently the agent connects to
+    this address using the gRPC protocol.
+
+    Default: `none`
+
+    Environment variable: `TFC_AGENT_OTLP_ADDRESS`
+
+
+* `-otlp-cert-file <path>`:
+    Optional path to a client TLS certificate file to load. When present, the
+    given certificate is used to encrypt the client connection to the
+    OpenTelemetry collector. When omitted, client connections are not secure.
+
+    Default: `none`
+
+    Environment variable: `TFC_AGENT_OTLP_CERT_FILE`
+
+
+* `-accept <job_types>`:
+    Optional string of comma-separated job types that this agent may run.
+    Acceptable job types are "plan", "apply", "policy", and "assessment". Do not
+    put whitespace inbetween entries.
+
+    Default: `plan,apply,policy,assessment`
+
+    Environment variable: `TFC_AGENT_ACCEPT`
+
+
+* `-h`:
+    Display this message and exit.
+
+* `-v`:
+    Display the version and exit.
+
