@@ -1,7 +1,7 @@
 # This workflow publishes a GitHub release when
 # a branch with a particular pattern & version
 # is merged.
-# - ex. tfc-agent-changelog/1.2.6
+# - ex. tfc-agent-release/1.2.6
 name: Publish Release on changelog branch merge
 on:
   pull_request:
@@ -23,9 +23,9 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Validate changelog branch
+      - name: Validate generated branch
         run: |
-          if [[ $HEAD_REF =~ ^tfc-agent-changelog/[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          if [[ $HEAD_REF =~ ^tfc-agent-release/[0-9]+\.[0-9]+\.[0-9]+$ ]]
           then
             echo "::notice::Branch is valid — $HEAD_REF"
           else
@@ -34,7 +34,7 @@ jobs:
           fi
       - name: Get version from branch name
         run: |
-          version=${HEAD_REF#tfc-agent-changelog/}
+          version=${HEAD_REF#tfc-agent-release/}
           echo "VERSION=$version" >> $GITHUB_ENV
       - name: Checkout repository
         uses: actions/checkout@v3
