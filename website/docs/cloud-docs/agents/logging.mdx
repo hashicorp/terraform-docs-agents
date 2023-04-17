@@ -40,13 +40,13 @@ levels. There are 5 levels supported by the agent:
 ## Data format
 
 By default, Terraform Cloud Agents emit log lines in a human-friendly text
-format. This is convenient for running the tfc-agent locally and streaming the
+format. This is convenient for running the TFC Agent locally and streaming the
 logs directly to a terminal, or for use in log systems where raw logs are
 consumed directly by operators. The default text format looks something like
 the following:
 
 ```
-2023-01-26T13:45:02.502-0800 [INFO]  core: Job received: job.type=plan job.id=run-xxx
+2023-04-14T17:12:43.002Z [INFO]  core: Job received: job_type=plan job_id=run-xxx
 ```
 
 It is also possible to configure the Terraform Cloud Agent to produce JSON-
@@ -58,7 +58,7 @@ environment variable `TFC_AGENT_LOG_JSON=1`. The JSON format contains additional
 verbose information in each log message, and looks something like this:
 
 ```
-{"@level":"info","@message":"Job received","@module":"core","@timestamp":"2023-01-26T13:47:20.637933-08:00","agent.id":"agent-xxx","agent.pool.id":"apool-xxx","agent.version":"1.6.0","job.id":"run-xxx","job.type":"plan"}
+{"@level":"info","@message":"Job received","@module":"core","@timestamp":"2023-04-13T23:35:28.653853Z","agent_id":"agent-xxx","agent_name":"name","agent_pool_id":"apool-xxx","agent_version":"1.7.1","job_id":"run-xxx","job_type":"plan"}
 ```
 
 ## Log data sensitivity

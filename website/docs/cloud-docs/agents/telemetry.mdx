@@ -120,3 +120,34 @@ the behavior and performance of various operations in a high-level, aggregated
 view.
 
 See the [Metrics](/terraform/cloud-docs/agents/metrics) documentation for details.
+
+## Categories
+
+Telemetry data can be broken down into three categories, global, Terraform, and policy.
+
+### Global
+Once an Agent has registered, global fields are present on telemetry.
+
+| Telemetry Key            | Description                             | Example Value      |
+| ------------------------ | --------------------------------------- | ------------------ |
+| `agent_id`               | Unique identifier for an agent.         | "agent-xxx"        |
+| `agent_name`             | Name of an agent.                       | "agent1"           |
+| `agent_version`          | Semantic version of agent.              | "1.7.1"            |
+| `agent_pool_id`          | Unique identifier for an agent pool.    | "apool-xxx"        |
+
+### Terraform
+Terraform fields are present on telemetry once an Agent begins handling a Terraform run.
+
+| Telemetry Key            | Description                              | Example Value     |
+| ------------------------ | ---------------------------------------- | ----------------- |
+| `organization_name`      | Name of an organization.                 | "organization1"   |
+| `run_id`                 | Unique identifier for a Terraform run.   | "run-xxx"         |
+| `run_operation`          | Terraform operation.                     | "apply"           |
+| `workspace_name`         | Name of a workspace.                     | "workspace1"      |
+
+### Policy
+Policy fields are present on telemetry once an Agent begins handling policy evaluation.
+
+| Telemetry Key            | Description                               | Example Value    |
+| ------------------------ | ----------------------------------------- | ---------------- |
+| `policy_evaluation_id`   | Unique identifier for a policy evaluation.| "poleval-xxx"    |
