@@ -1,5 +1,7 @@
 ---
 page_title: Changelog - Terraform Cloud Agents - Terraform Cloud and Terraform Enterprise
+description: >-
+  Keep track of changes to the Terraform Cloud Agent
 ---
 
 # Terraform Cloud Agent Changelog
@@ -15,6 +17,23 @@ within each release are categorized into one or more of the following labels:
 
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
+
+## 1.8.0 (04/18/2023)
+
+BUG FIXES:
+
+* Fixed an issue which prevented some Dynamic Credentials validation error messages from being relayed (#365)
+* Fixed crash when unpacking configuration versions that contained archive entries with an empty name (#371)
+
+IMPROVEMENTS:
+
+* Updated logs, metrics, and traces to have consistently named attributes (#357, #364)
+* Removed unnecessary nesting from telemetry attributes (#368)
+
+FEATURES:
+
+* Added ability to collect terraform, module and provider versions for reporting purposes (#367)
+* Added support for vault-backed dynamic provider credentials (#370)
 
 ## 1.7.1 (03/29/2023)
 
