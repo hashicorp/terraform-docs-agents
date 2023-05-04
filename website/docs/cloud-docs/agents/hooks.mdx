@@ -45,10 +45,31 @@ Please note the following behavior when using hooks:
 - Each hook has a 60 second timeout. If a hook times out the Terraform run will
 	fail immediately.
 - Environment variables do not persist across hooks. For example, if a
-	`pre-plan` hook exports environment variables, they will not be available
-	during `terraform plan` or during the `post-plan` hook. Similarly, if
-	`terraform plan` exports environment variables, they will not be available
-	during the `post-plan` hook.
+  `pre-plan` hook exports environment variables, they will not be available
+  during the `post-plan` hook. Similarly, if `terraform plan` exports
+  environment variables, they will not be available during the `post-plan` hook.
+
+## Setting environment variables
+
+Hooks may be used to set environment variables for subsequent `terraform`
+commands to use. To set an environment variable, write lines in `KEY=value`
+format to the file pointed to by the `$TFC_AGENT_ENV` environment variable.
+Newlines are used to separate multiple environment variables. For example, to
+set the `FOO` and `BAR` environment variables for the `terraform plan` operation
+to consume, write the following in a `pre-plan` hook script:
+
+```
+#!/bin/sh
+echo FOO=hello >> $TFC_AGENT_ENV
+echo BAR=world >> $TFC_AGENT_ENV
+```
+
+Environment variables set by a hook script in this way are only applicable to
+the current operation, and are not persisted for later operations. For example,
+if `FOO=bar` is set in the `pre-plan` hook, then `FOO=bar` will be set during
+the `terraform plan` command, but will not be set during `terraform apply`. To
+use the variable during the apply phase, write the variable to the
+`$TFC_AGENT_ENV` file again in the `pre-apply` hook script.
 
 ## Configuration
 
