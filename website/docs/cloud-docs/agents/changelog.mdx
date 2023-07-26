@@ -18,6 +18,21 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.12.0 (07/26/2023)
+
+BUG FIXES:
+
+* Fixed OpenTelemetry log message to reflect insecure connections (#453)
+
+FEATURES:
+
+* Added support for specifying a wait time after generating Vault-backed AWS credentials (#451)
+* Added support for multiple dynamic credentials configurations (#452)
+
+IMPROVEMENTS:
+
+* Increased max wait time for Vault-backed Azure credentials to 25 minutes from 15 minutes (#450)
+
 ## 1.11.0 (07/19/2023)
 
 FEATURES:
