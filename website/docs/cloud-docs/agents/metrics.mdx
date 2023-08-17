@@ -115,11 +115,11 @@ metrics in this section are prefixed by `tfc-agent.core.terraform.`.
 | `setup_backend.milliseconds`                   | Timer | Time spent configuring Terraform CLI for Terraform Cloud.                           |
 | `setup_ssh_key.milliseconds`                   | Timer | Time spent configuring an SSH key for Terraform to use while downloading modules.   |
 | `setup_ssh_key.check_git_version.milliseconds` | Timer | Time spent ensuring the local version of "git" is adequate for leveraging SSH auth. |
-| `setup_terraform_binary.milliseconds`          | Timer | Time spent downloading and unpacking a Terraform OSS release.                       |
-| `setup_terraform_binary.download.bytes`        | Gauge | Size of a downloaded Terraform OSS version.                                         |
-| `setup_terraform_binary.download.milliseconds` | Timer | Time spent downloading a Terraform OSS release.                                     |
-| `setup_terraform_binary.unpack.bytes`          | Gauge | Size of an unpacked Terraform OSS release.                                          |
-| `setup_terraform_binary.unpack.milliseconds`   | Timer | Time spent unpacking a Terraform OSS release.                                       |
+| `setup_terraform_binary.milliseconds`          | Timer | Time spent downloading and unpacking a Terraform CLI release.                       |
+| `setup_terraform_binary.download.bytes`        | Gauge | Size of a downloaded Terraform CLI version.                                         |
+| `setup_terraform_binary.download.milliseconds` | Timer | Time spent downloading a Terraform CLI release.                                     |
+| `setup_terraform_binary.unpack.bytes`          | Gauge | Size of an unpacked Terraform CLI release.                                          |
+| `setup_terraform_binary.unpack.milliseconds`   | Timer | Time spent unpacking a Terraform CLI release.                                       |
 | `setup_terraform_config.milliseconds`          | Timer | Time spent downloading and unpacking a Terraform configuration.                     |
 | `setup_terraform_config.download.bytes`        | Gauge | Size of a downloaded Terraform configuration.                                       |
 | `setup_terraform_config.download.milliseconds` | Timer | Time spent downloading a Terraform configuration.                                   |
