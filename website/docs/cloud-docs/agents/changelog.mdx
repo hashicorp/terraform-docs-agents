@@ -18,6 +18,20 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.14.0 (11/09/2023)
+
+FEATURES:
+
+* Added support for dynamic provider credentials for the Kubernetes and Helm providers (#503)
+
+IMPROVEMENTS:
+
+* Optimized filesystem storage footprint by trimming provider installs before upload (#532)
+
+BUG FIXES:
+
+* Fixed unexpected behavior with policies by preserving file timestamps and modes on unpacked archives (#548)
+
 ## 1.13.1 (10/25/2023)
 
 IMPROVEMENTS:
