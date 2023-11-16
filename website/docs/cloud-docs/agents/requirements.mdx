@@ -28,6 +28,31 @@ Use the following specifications as a reference:
   - Each run requires the agent to temporarily store local copies of the tarred repository, extracted repository, state file, any providers or modules, and the Terraform binary itself.
 - At least 2GB of system memory
 
+## Software Requirements
+
+Agents may depend on third-party tooling for certain features and functionality.
+The tfc-agent itself does not have any direct dependency on any of the following
+tools, though most common uses of Terraform will require them. The agent makes
+the assumption that the following utilities are pre-installed, and their
+respective CLI commands available on the `$PATH` of the user running tfc-agent.
+
+* `git` - The Git CLI. May be used by the Terraform CLI when downloading modules
+  from remote Git servers. Git version 2.3 or greater is required.
+* `ssh` - The SSH CLI. Used by `git` when the remote source uses the SSH
+  protocol.
+
+In addition to the above tools, it is often useful to install the following
+optional software to support a broad range of uses. These tools may be used by
+Terraform's `local-exec` provisioners, an `external` data source, or a tfc-agent
+[hook script](/terraform/cloud-docs/agents/hooks).
+
+* `curl` - Simple command-line HTTP client.
+* `wget` - Simple command-line HTTP client.
+* `jq` - JSON data inspection utility.
+* `unzip` - Unarchiver for zip archives.
+* `tar` - Unarchiver for tar archives.
+* `gzip` - Decompression utility for gzipped archives.
+
 ## Networking Requirements
 
 In order for an agent to function properly, it must be able to make outbound requests over HTTPS (TCP port 443) to the Terraform Cloud application APIs. These requests may require perimeter networking as well as container host networking changes, depending on your environment. Refer to the [Terraform Cloud IP Ranges documentation](/terraform/cloud-docs/architectural-details/ip-ranges) for more details on the IP ranges.
