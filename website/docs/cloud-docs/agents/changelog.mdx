@@ -18,10 +18,17 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.14.1 (11/16/2023)
+
+BUG FIXES:
+
+* Fixed issue that could cause a "failed to load shared config file" error in certain cases for Vault-backed AWS dynamic credentials (#557)
+
 ## 1.14.0 (11/09/2023)
 
 FEATURES:
 
+* Added support for terraform test (#546)
 * Added support for dynamic provider credentials for the Kubernetes and Helm providers (#503)
 
 IMPROVEMENTS:
