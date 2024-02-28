@@ -18,6 +18,12 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.14.5 (02/28/2024)
+
+BUG FIXES:
+
+* Fixed bug to handle Sentinel parameters that were collection of nested data types(#624)
+
 ## 1.14.4 (02/14/2024)
 
 BUG FIXES:
@@ -29,7 +35,6 @@ BUG FIXES:
 BUG FIXES: 
 
 * Updated dependencies to address CVEs: GHSA-9763-4f94-gfch, CVE-2023-49569, CVE-2023-49568
-* Resolved a bug where the use of a `terraform-bundle` in combination with a defined working directory resulted in the following error: `Operation failed: failed packing filesystem: illegal slug error: invalid symlink`.
 
 ## 1.14.2 (12/19/2023)
 
