@@ -88,3 +88,23 @@ first ensure the proxy software supports the
 protocol. Set the `HTTPS_PROXY` environment variable when starting the agent.
 The agent will use the HTTP CONNECT method to establish a secure tunnel through
 the proxy to Terraform Cloud.
+
+## Security considerations
+
+Request forwarding is made secure by the agent application. Requests may only be
+forwarded through the agent which originate from Terraform Cloud, and this is
+guaranteed via the agent requiring an authenticated session to be established
+prior to forwarding any requests.
+
+Because forwarded requests and responses may contain sensitive information,
+including API tokens to 3rd party vendors, PII, and more, it is recommended
+that production use cases leverage dedicated agents to handle request
+forwarding functionality. This ensures that no other processes executing user
+code will be running within the same process space, thereby avoiding certain
+attack vectors which could be leveraged by bad actors with access to unrelated
+resources in a given organization.
+
+To dedicate an agent to request forwarding only, set the [accepted
+workload types](/terraform/cloud-docs/agents/agents#accept) to `none`. This
+disables all other types of workloads from being executed, leaving only
+request forwarding features enabled.
