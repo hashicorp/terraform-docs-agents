@@ -63,6 +63,10 @@ Forwarded requests are limited to a 10mb response body. It is expected that this
 limit is generous enough to comfortably support all Terraform Cloud operations
 while providing protection against unbounded responses.
 
+All forwarded requests are subject to a request timeout. The default timeout is
+60 seconds, but this value is tuned for specific features and use cases and may
+be set slightly higher or lower depending on the type of request being made.
+
 Agents must be able to connect to Terraform Cloud outbound over the internet, as
 well as to all private request forwarding targets via HTTP/s.
 
@@ -75,9 +79,17 @@ for each pool which will leverage request forwarding features. Running multiple
 request forwarding agents provides better fault tolerance and distribution of
 requests.
 
-TODO: Say something about timeouts...
+Agents can emit telemetry data about their resource utilization, which is useful
+for making scaling decisions. In particular, monitoring memory and CPU
+utilization on agents with request forwarding enabled is key to understanding if
+the existing agent(s) are sufficient for the amount of load they are responsible
+for. See the [runtime metrics](/terraform/cloud-docs/agents/metrics#runtime-metrics)
+documentation for the specific measurements available.
 
-TODO: Say something about metrics and monitoring...
+Because request forwarding is a concurrent function of the agent (more than one
+request may be handled simultaneously on the same agent), both horizontal
+(number of agents) and vertical (system resources per agent host) scaling
+vectors are important.
 
 ## Egress Proxy Support
 
