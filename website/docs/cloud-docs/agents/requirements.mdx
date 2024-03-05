@@ -29,7 +29,7 @@ Use the following specifications as a reference:
 - At least 2GB of system memory
   - The agent runtime itself will utilize memory during uploading and downloading ofvarious artifacts, constructing temporary execution environments, parsing configurations, etc.
   - Running operations (`terraform plan`, `git clone`, `sentinel apply`, etc.), will utilize memory to facilitate various workflows.
-  - Request forwarding may hold multiple requests and responses in memory until they are successfully executed and relayed to Terraform Cloud. It is good practice to add at least 100mb of additional memory when request forwarding is enabled.
+  - Request forwarding may hold multiple requests and responses in memory until they are successfully executed and relayed to Terraform Cloud. It is good practice to add at least 250mb of additional memory when request forwarding is enabled.
 
 ## Networking Requirements
 
