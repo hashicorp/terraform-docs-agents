@@ -6,9 +6,9 @@ description: >-
 
 # Request Forwarding
 
-Terraform Cloud Agents may be configured to handle forwarding HTTP and HTTPs
+Terraform Cloud Agents may be configured to handle forwarding HTTP and HTTPS
 requests on behalf of Terraform Cloud. This enables Terraform Cloud to access
-private HTTP and HTTPS resources in restrictive external networks without
+private HTTP and HTTPS resources in external networks without
 requiring direct inbound network access.
 
 Only specific features and use cases will leverage agent request forwarding to
@@ -29,9 +29,8 @@ and responses to/from the target API.
 
 ## Routing of Forwarded Requests
 
-Request forwarding is a function of an
-[agent pool](/terraform/cloud-docs/agents/agent-pools). Each agent pool may have
-multiple agents registered with request forwarding enabled. The agent pool is
+Request forwarding requires the use of [agent pools](/terraform/cloud-docs/agents/agent-pools)
+Each agent pool may have multiple agents registered with request forwarding enabled. The agent pool is
 then selected by the user in Terraform Cloud as the target for various features
 which require access to private network resources. This creates the mapping from
 Terraform Cloud resources (such as VCS connections) to a pool of agents capable

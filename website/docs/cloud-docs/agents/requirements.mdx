@@ -27,7 +27,7 @@ Use the following specifications as a reference:
   - Each run requires the agent to temporarily store local copies of the tarred repository, extracted repository, state file, any providers or modules, and the Terraform binary itself.
   - When using agents for private VCS operations, a good rule of thumb is to ensure the agent has storage capacity equal to at least twice the maximum expected repository size.
 - At least 2GB of system memory
-  - The agent runtime itself will utilize memory during uploading and downloading ofvarious artifacts, constructing temporary execution environments, parsing configurations, etc.
+  - The agent runtime itself will utilize memory during uploading and downloading of various artifacts, constructing temporary execution environments, parsing configurations, etc.
   - Running operations (`terraform plan`, `git clone`, `sentinel apply`, etc.), will utilize memory to facilitate various workflows.
   - Request forwarding may hold multiple requests and responses in memory until they are successfully executed and relayed to Terraform Cloud. It is good practice to add at least 250mb of additional memory when request forwarding is enabled.
 
