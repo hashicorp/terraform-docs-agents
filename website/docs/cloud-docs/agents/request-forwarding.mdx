@@ -6,30 +6,29 @@ description: >-
 
 # Request Forwarding
 
-Terraform Cloud Agents may be configured to handle forwarding HTTP and HTTPS
-requests on behalf of Terraform Cloud. This enables Terraform Cloud to access
-private HTTP and HTTPS resources in external networks without
-requiring direct inbound network access.
+You can configure Terraform Cloud Agents to handle HTTP and HTTPS
+request forwarding on behalf of Terraform Cloud. This enables Terraform Cloud to access
+services in private networks without requiring direct inbound network access.
 
-Only specific features and use cases will leverage agent request forwarding to
+Only specific features and use cases will use agent request forwarding to
 fulfill requests.
 
--> **Note:** Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for more information about features which require request forwarding.
+-> **Note:** Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for details on which features can use request forwarding.
 
 ## Request Forwarding Architecture
 
-Request forwarding is an additional function that must be enabled on a per-agent
+Request forwarding is an additional function that you can enable on a per-agent
 basis. Agents are deployed into private networks where they have direct access
-to the target private resource(s), such as private VCS systems or other APIs.
-Agents register with Terraform Cloud via outbound-only connections. These
-connections are held open by Terraform Cloud, and are used to transmit requests
-and responses to/from the target API.
+to the target private services, such as private version control systems or other APIs.
+Agents register with Terraform Cloud via outbound-only connections. Terraform Cloud 
+holds these connections open and uses them to transmit requests and responses 
+between the target API and Terraform Cloud.
 
-![request forwarding architecture diagram](/img/request-forwarding-arch.png)
+![Request forwarding architecture diagram](/img/request-forwarding-arch.png)
 
-## Routing of Forwarded Requests
+## Forwarded Request Routing
 
-Request forwarding requires the use of [agent pools](/terraform/cloud-docs/agents/agent-pools)
+Request forwarding requires the use of [agent pools](/terraform/cloud-docs/agents/agent-pools).
 Each agent pool may have multiple agents registered with request forwarding enabled. The agent pool is
 then selected by the user in Terraform Cloud as the target for various features
 which require access to private network resources. This creates the mapping from
@@ -40,34 +39,34 @@ of accessing the target API.
 
 To enable request forwarding, start the agent with the `-request-forwarding`
 flag, or set the environment variable `TFC_AGENT_REQUEST_FORWARDING=true`. When
-the agent starts, you will see log messages like the following:
+the agent starts, you will see the following log messages:
 
 ```
 [INFO]  core: Request forwarding is enabled
 [INFO]  grpc_connector: Connected to broker, awaiting requests
 ```
 
-The above indicates that the agent has successfully connected to Terraform Cloud
+These log messages indicate that the agent has successfully connected to Terraform Cloud
 and is ready to start forwarding requests.
 
 ## Requirements and Limitations
 
 Agent version 1.15.0+ is required to use request forwarding.
 
-It is recommended that at least 250mb of system memory be allocated specifically
+We recommend that you allocate at least 250MB of additional system memory specifically
 for request forwarding. This is in addition to the minimum
 [system requirements](/terraform/cloud-docs/agents/requirements).
 
-Forwarded requests are limited to a 10mb response body. It is expected that this
-limit is generous enough to comfortably support all Terraform Cloud operations
-while providing protection against unbounded responses.
+Forwarded requests are limited to a 10MB response body. This limit comfortably 
+supports all Terraform Cloud operations while providing protection against 
+unbounded responses.
 
 All forwarded requests are subject to a request timeout. The default timeout is
 60 seconds, but this value is tuned for specific features and use cases and may
 be set slightly higher or lower depending on the type of request being made.
 
 Agents must be able to connect to Terraform Cloud outbound over the internet, as
-well as to private infrastructure targets for request forwarding via HTTP/S.
+well as to private infrastructure targets for request forwarding via HTTP and HTTPS.
 
 ## Performance and Scaling
 
@@ -78,12 +77,9 @@ for each pool which will leverage request forwarding features. Running multiple
 request forwarding agents provides better fault tolerance and distribution of
 requests.
 
-Agents can emit telemetry data about their resource utilization, which is useful
-for making scaling decisions. In particular, monitoring memory and CPU
-utilization on agents with request forwarding enabled is key to understanding if
-the existing agent(s) are sufficient for the amount of load they are responsible
-for. See the [runtime metrics](/terraform/cloud-docs/agents/metrics#runtime-metrics)
-documentation for the specific measurements available.
+We recommend that you monitor the memory and CPU utilization on your agents with 
+request forwarding enabled to determine if you need to deploy additional agents. Refer to
+[runtime metrics](/terraform/cloud-docs/agents/metrics#runtime-metrics) for more details.
 
 Because request forwarding is a concurrent function of the agent (more than one
 request may be handled simultaneously on the same agent), both horizontal
@@ -102,20 +98,17 @@ the proxy to Terraform Cloud.
 
 ## Security considerations
 
-Request forwarding is made secure by the agent application. Requests may only be
-forwarded through the agent which originate from Terraform Cloud, and this is
-guaranteed via the agent requiring an authenticated session to be established
-prior to forwarding any requests.
+The agent application secures forwarded requests by ensuring that requests may 
+only be forwarded through the agent which originate from Terraform Cloud. The agent
+guarantees this by requiring an authenticated session to be established prior to forwarding any requests.
 
 Because forwarded requests and responses may contain sensitive information,
-including API tokens to 3rd party vendors, PII, and more, it is recommended
-that production use cases leverage dedicated agents to handle request
+such as API tokens to 3rd party vendors and PII, we recommend
+that production use cases use dedicated agents to handle request
 forwarding functionality. This ensures that no other processes executing user
-code will be running within the same process space, thereby avoiding certain
-attack vectors which could be leveraged by bad actors with access to unrelated
-resources in a given organization.
+code will be running within the same process space and avoids certain
+attack vectors.
 
 To dedicate an agent to request forwarding only, set the [accepted
 workload types](/terraform/cloud-docs/agents/agents#accept) to `none`. This
-disables all other types of workloads from being executed, leaving only
-request forwarding features enabled.
+disables all workloads except for request forwarding from being executed.
