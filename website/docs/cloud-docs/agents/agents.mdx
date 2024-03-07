@@ -91,7 +91,7 @@ To use single-execution mode, start the agent with the `-single` command line ar
 
 ### Optional Configuration: Request Forwarding
 
-The agent may be configured to accept forwarded requests from Terraform Cloud. Request forwarding enables private infrastructure resources (such as private VCS systems) to be accessed securely by Terraform Cloud. See [Request Forwarding]() for more details. By default, request forwarding is disabled. To enable it, start the agent with the `-request-forwarding` command line argument.
+You can configure the agent to accept forwarded requests from Terraform Cloud. Request forwarding enables Terraform Cloud to securely access private infrastructure resources, such as private VCS systems. See [Request Forwarding]() for more details. By default, request forwarding is disabled. To enable it, start the agent with the `-request-forwarding` command line argument.
 
 Forwarded requests are handled separately from other workloads and may run in parallel to plans, applies, policy checks, etc. This behavior may be modified by enabling or disabling certain workload types via the `-accept` parameter, and selectively setting the `-request-forwarding` flag on certain agent(s) only. For example, you may have a pool of 4 agents, where two are configured to handle only plans and applies, and the other two are configured to handle only request forwarding.
 
