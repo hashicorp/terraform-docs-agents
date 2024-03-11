@@ -88,13 +88,10 @@ vectors are important.
 
 ## Egress Proxy Support
 
-Request forwarding agents may be deployed in scenarios where an egress proxy
-is required to reach Terraform Cloud over the internet. To use an egress proxy,
-first ensure the proxy software supports the
-[HTTP CONNECT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT)
-protocol. Set the `HTTPS_PROXY` environment variable when starting the agent.
-The agent will use the HTTP CONNECT method to establish a secure tunnel through
-the proxy to Terraform Cloud.
+If your agents require an egress proxy to reach Terraform Cloud over the internet, you can set the
+`HTTPS_PROXY` environment variable with your proxy's address when starting the agent. Your 
+proxy software must support the [HTTP CONNECT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT) protocol,
+which the agent will use to establish a secure tunnel through the proxy to Terraform Cloud.
 
 ## Security considerations
 
