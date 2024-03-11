@@ -81,10 +81,8 @@ We recommend that you monitor the memory and CPU utilization on your agents with
 request forwarding enabled to determine if you need to deploy additional agents. Refer to
 [runtime metrics](/terraform/cloud-docs/agents/metrics#runtime-metrics) for more details.
 
-Because request forwarding is a concurrent function of the agent (more than one
-request may be handled simultaneously on the same agent), both horizontal
-(number of agents) and vertical (system resources per agent host) scaling
-vectors are important.
+Since an agent may handle more than one forwarded request simultaneously, both horizontal
+(number of agents) and vertical (system resources per agent host) scaling vectors are important.
 
 ## Egress Proxy Support
 
