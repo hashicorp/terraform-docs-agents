@@ -1,22 +1,22 @@
 ---
-page_title: Telemetry - Terraform Cloud Agents - Terraform Cloud and Terraform Enterprise
+page_title: Telemetry - HCP Terraform Agents - HCP Terraform and Terraform Enterprise
 description: >-
-  Use telemetry data to understand the performance and behavior of Terraform Cloud Agents. Learn how to configure telemetry, configure and run the OpenTelemetry collector, and more.
+  Use telemetry data to understand the performance and behavior of HCP Terraform Agents. Learn how to configure telemetry, configure and run the OpenTelemetry collector, and more.
 ---
 
 # Telemetry
 
-Terraform Cloud Agents may be configured to emit helpful telemetry data,
+HCP Terraform Agents may be configured to emit helpful telemetry data,
 including both trace spans and metrics.
 
 ## Telemetry architecture
 
-Terraform Cloud Agents emit telemetry data using the
+HCP Terraform Agents emit telemetry data using the
 [OpenTelemetry](https://opentelemetry.io/) protocol. The agent is a simple
 producer of telemetry data, and relies on an OpenTelemetry Collector to perform
 aggregation, post-processing, and exporting of telemetry data to upstream
 technology and/or vendors. OpenTelemetry is an extensible telemetry protocol and
-open source platform, which enables the Terraform Cloud Agent to remain
+open source platform, which enables the HCP Terraform Agent to remain
 vendor-agnostic while producing high-value telemetry data for a wide array
 of platforms.
 
@@ -49,14 +49,14 @@ Docker container labeled
 
 ## Compatibility
 
-Each released version of the Terraform Cloud Agent ships with a specific version
+Each released version of the HCP Terraform Agent ships with a specific version
 of the OpenTelemetry client libraries built in. As these libraries and
 implementations change, it is possible that certain versions of the agent will
 become incompatible with newer versions of the OpenTelemetry collector. To
 track version compatibility, the table below will be updated whenever these
 version constraints become known.
 
-| Terraform Cloud Agent version | Compatible OpenTelemetry Collector version |
+| HCP Terraform Agent version | Compatible OpenTelemetry Collector version |
 | ----------------------------- | ------------------------------------------ |
 | >= 0.1.12, <= 1.7.0           | <= 0.42.0                                  |
 | >= 1.7.1                      | Tested up to 0.73.0                        |
@@ -72,7 +72,7 @@ docker run -p 127.0.0.1:4317:4317/tcp otel/opentelemetry-collector-contrib:0.42.
 ```
 
 This will start an OpenTelemetry collector, and expose the gRPC interface (which
-the Terraform Cloud Agent can talk to) on port 4317 of the local machine.
+the HCP Terraform Agent can talk to) on port 4317 of the local machine.
 
 ### Configuring the collector
 
@@ -96,7 +96,7 @@ The collector should start with your modified configuration.
 
 ## DataDog Agent
 
-The Terraform Cloud Agent may target a DataDog agent directly instead of an
+The HCP Terraform Agent may target a DataDog agent directly instead of an
 OpenTelemetry collector. To configure the DataDog agent to accept OTLP
 connections, refer to the [DataDog OpenTelemetry
 documentation](https://docs.datadoghq.com/opentelemetry/otlp_ingest_in_the_agent).
@@ -109,13 +109,13 @@ collector address.
 ## Tracing
 
 The agent emits tracing spans which are useful in understanding and debugging
-various operations performed by the Terraform Cloud Agent.
+various operations performed by the HCP Terraform Agent.
 
 See the [Tracing](/terraform/cloud-docs/agents/tracing) documentation for details.
 
 ## Metrics
 
-Terraform Cloud Agents emit granular metrics which are useful in understanding
+HCP Terraform Agents emit granular metrics which are useful in understanding
 the behavior and performance of various operations in a high-level, aggregated
 view.
 
