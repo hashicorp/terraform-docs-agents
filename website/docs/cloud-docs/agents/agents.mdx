@@ -1,12 +1,12 @@
 ---
-page_title: HCP Terraform Agents - Install and Run Agents - HCP Terraform and Terraform Enterprise
+page_title: Terraform Cloud Agents - Install and Run Agents - Terraform Cloud and Terraform Enterprise
 description: >-
   Install, configure, and run agents on your own infrastructure.
 ---
 
 # Install and Run Agents
 
-The agent software runs on your own infrastructure. The token you provide when starting the agent assigns it to an HCP Terraform [agent pool](/terraform/cloud-docs/agents/agent-pools).
+The agent software runs on your own infrastructure. The token you provide when starting the agent assigns it to a Terraform Cloud [agent pool](/terraform/cloud-docs/agents/agent-pools).
 
 ## Operational Considerations
 
@@ -14,13 +14,13 @@ Agents do not guarantee a clean working environment per Terraform execution. Eac
 
 ### Run Multiple Agents
 
-You may choose to run multiple agents within your network, up to the organization's purchased agent limit. If there are multiple agents available within an organization, HCP Terraform selects the first available agent within the target pool.
+You may choose to run multiple agents within your network, up to the organization's purchased agent limit. If there are multiple agents available within an organization, Terraform Cloud selects the first available agent within the target pool.
 
 Each agent process runs a single Terraform run at a time. Multiple agent processes can be concurrently run on a single instance, license limit permitting.
 
 ### Resilience
 
-The agent distributes as a standalone binary that runs on any supported system. By default, the agent runs in the foreground as a long-running process that continuously polls for workloads from HCP Terraform. An agent process may terminate unexpectedly due to stopping the process forcefully, power cycling the host machine, and other methods. We strongly recommend pairing the agent with a process supervisor to ensure that it automatically restarts in case of an error.
+The agent distributes as a standalone binary that runs on any supported system. By default, the agent runs in the foreground as a long-running process that continuously polls for workloads from Terraform Cloud. An agent process may terminate unexpectedly due to stopping the process forcefully, power cycling the host machine, and other methods. We strongly recommend pairing the agent with a process supervisor to ensure that it automatically restarts in case of an error.
 
 ## Download and Install the Agent
 
@@ -42,9 +42,9 @@ To customize this update behavior, pass the flag `-auto-update` or set the envir
 
 ## Start the Agent
 
-To start the agent and connect it to an HCP Terraform agent pool:
+To start the agent and connect it to a Terraform Cloud agent pool:
 
-1. Retrieve the [token](/terraform/cloud-docs/agents/agent-pools#create-an-agent-pool) from the HCP Terraform agent pool you want to use.
+1. Retrieve the [token](/terraform/cloud-docs/agents/agent-pools#create-an-agent-pool) from the Terraform Cloud agent pool you want to use.
 1. Set the `TFC_AGENT_TOKEN` environment variable.
 1. (Optional) Set the `TFC_AGENT_NAME` environment variable. This name is for your reference only. The agent ID appears in logs and API requests.
 
@@ -53,7 +53,7 @@ export TFC_AGENT_TOKEN=your-token
 export TFC_AGENT_NAME=your-agent-name
 ./tfc-agent
 ```
-Once complete, your agent and its status appear on the **Agents** page in the HCP Terraform UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
+Once complete, your agent and its status appear on the **Agents** page in the Terraform Cloud UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
 
 ### Optional Configuration: Run an Agent Using Docker
 
@@ -91,7 +91,7 @@ To use single-execution mode, start the agent with the `-single` command line ar
 
 ### Optional Configuration: Request Forwarding
 
-You can configure the agent to accept forwarded requests from HCP Terraform. Request forwarding enables HCP Terraform to securely access private infrastructure resources, such as private VCS systems. See [Request Forwarding](/terraform/cloud-docs/agents/request-forwarding) for more details. By default, request forwarding is disabled. To enable it, start the agent with the `-request-forwarding` command line argument.
+You can configure the agent to accept forwarded requests from Terraform Cloud. Request forwarding enables Terraform Cloud to securely access private infrastructure resources, such as private VCS systems. See [Request Forwarding](/terraform/cloud-docs/agents/request-forwarding) for more details. By default, request forwarding is disabled. To enable it, start the agent with the `-request-forwarding` command line argument.
 
 Agents handle forwarded requests separately from other workloads and may process requests in parallel to plans, applies, policy checks, etc. You can modify this behavior by enabling or disabling certain workload types via the `-accept` parameter, and selectively setting the `-request-forwarding` flag on certain agent(s) only. For example, you may have a pool of 4 agents, where two are configured to handle only plans and applies, and the other two are configured to handle only request forwarding.
 
@@ -99,7 +99,7 @@ Agents handle forwarded requests separately from other workloads and may process
 
 ~> **Important:** We strongly recommend that you only terminate the agent using one of these methods. Abruptly terminating an agent by forcefully stopping the process or power cycling the host does not let the agent deregister and results in an **Unknown** agent status. Abrupt termination may cause further capacity issues. Refer to [capacity issues](/terraform/cloud-docs/agents/agent-pools#agent-capacity-usage) for details.
 
-The agent maintains a registration and a liveness indicator within HCP Terraform during the entire course of its runtime. When an agent retires, it must deregister itself from HCP Terraform. The agent deregisters automatically as part of its shutdown procedure in the following scenarios:
+The agent maintains a registration and a liveness indicator within Terraform Cloud during the entire course of its runtime. When an agent retires, it must deregister itself from Terraform Cloud. The agent deregisters automatically as part of its shutdown procedure in the following scenarios:
 
 - You enter `Ctrl-C` in an interactive terminal.
 - The agent process ID receives one of `SIGINT`, `SIGTERM`, or `SIGQUIT`. It is important to send only one signal. The agent interprets a second signal as forceful termination signal exits immediately.
@@ -117,7 +117,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 * `-name <name>`:
     An optional user-specified name for the agent. This name may be used in
-    the HCP Terraform user interface to help easily identify the agent.
+    the Terraform Cloud user interface to help easily identify the agent.
 
     Default: `The agent's ephemeral ID, assigned during boot.`
 
@@ -190,7 +190,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 
 * `-address <addr>`:
-    The HTTP or HTTPS address of the HCP Terraform API.
+    The HTTP or HTTPS address of the Terraform Cloud API.
 
     Default: `https://app.terraform.io`
 
@@ -198,7 +198,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 
 * `-token <token>`:
-    The agent token to use when making requests to the HCP Terraform API.
+    The agent token to use when making requests to the Terraform Cloud API.
     This token must be obtained from the API or UI.  It is recommended to use
     the environment variable whenever possible for configuring this setting due
     to the sensitive nature of API tokens.
