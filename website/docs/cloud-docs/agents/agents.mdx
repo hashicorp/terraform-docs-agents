@@ -117,7 +117,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 * `-name <name>`:
     An optional user-specified name for the agent. This name may be used in
-    the Terraform Cloud user interface to help easily identify the agent.
+    the HCP Terraform user interface to help easily identify the agent.
 
     Default: `The agent's ephemeral ID, assigned during boot.`
 
@@ -190,7 +190,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 
 * `-address <addr>`:
-    The HTTP or HTTPS address of the Terraform Cloud API.
+    The HTTP or HTTPS address of the HCP Terraform API.
 
     Default: `https://app.terraform.io`
 
@@ -198,7 +198,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 
 * `-token <token>`:
-    The agent token to use when making requests to the Terraform Cloud API.
+    The agent token to use when making requests to the HCP Terraform API.
     This token must be obtained from the API or UI.  It is recommended to use
     the environment variable whenever possible for configuring this setting due
     to the sensitive nature of API tokens.
@@ -229,8 +229,8 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 * `-accept <job_types>`:
     Optional string of comma-separated job types that this agent may run.
-    Acceptable job types are "plan", "apply", "policy", and "assessment". Do not
-    put whitespace in between entries.
+    Acceptable job types are "plan", "apply", "policy", "assessment", "ingress",
+    and "test". Do not put whitespace in between entries.
 
     Default: `plan,apply,policy,assessment`
 
