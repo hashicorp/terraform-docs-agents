@@ -1,6 +1,6 @@
 [
   {
-    "heading": "Terraform Cloud Agents"
+    "heading": "HCP Terraform Agents"
   },
   { "title": "Overview", "path": "" },
   { "title": "Requirements", "path": "requirements" },

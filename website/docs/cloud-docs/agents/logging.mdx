@@ -1,18 +1,18 @@
 ---
-page_title: Logging - Terraform Cloud Agents - Terraform Cloud and Terraform Enterprise
+page_title: Logging - HCP Terraform Agents - HCP Terraform and Terraform Enterprise
 description: >-
   Monitor agent log output and flash messages from HashiCorp that communicate important changes.
 ---
 
 # Logging
 
-Terraform Cloud Agents log helpful messages that tell operators about
-agent behavior, including communication with Terraform Cloud APIs, specific
+HCP Terraform Agents log helpful messages that tell operators about
+agent behavior, including communication with HCP Terraform APIs, specific
 commands run, actions taken, and runtime management.
 
 ## Log output
 
-Terraform Cloud Agents write log messages directly to stdout/stderr. This
+HCP Terraform Agents write log messages directly to stdout/stderr. This
 lets the operator capture the logs in a variety of
 different logging systems, gives CLI users a way
 to see a log of the agent's behavior directly in their terminal. By default,
@@ -28,7 +28,7 @@ levels. There are 5 levels supported by the agent:
 * `error` contains only critical error messages. The agent process is otherwise
   silent.
 * `warn` contains all error-level messages, as well as informational messages
-  such as system messages directly from the Terraform Cloud platform.
+  such as system messages directly from the HCP Terraform platform.
 * `info` contains all warn-level messages and high-level information about the
   agent and the workflows it is executing. In normal circumstances, this is
   the safest and most helpful log level for day to day operation.
@@ -39,8 +39,8 @@ levels. There are 5 levels supported by the agent:
 
 ## Data format
 
-By default, Terraform Cloud Agents emit log lines in a human-friendly text
-format. This is convenient for running the TFC Agent locally and streaming the
+By default, HCP Terraform Agents emit log lines in a human-readable text
+format. This is convenient for running the HCP Terraform Agent locally and streaming the
 logs directly to a terminal, or for use in log systems where raw logs are
 consumed directly by operators. The default text format looks something like
 the following:
@@ -49,7 +49,7 @@ the following:
 2023-04-14T17:12:43.002Z [INFO]  core: Job received: job_type=plan job_id=run-xxx
 ```
 
-It is also possible to configure the Terraform Cloud Agent to produce JSON-
+It is also possible to configure the HCP Terraform Agent to produce JSON-
 formatted logs. This format will cause each log line to be serialized as an
 individual JSON object, and is more ideal for logging systems which are capable
 of parsing and performing post-processing on log data for each line. JSON
@@ -81,4 +81,4 @@ Flash Messages are a type of log that HashiCorp may send to agents from time to 
 
 Flash Messages are version specific, and may only apply to the specific version of the agent you are running.
 
-Adding monitoring and alerting for these `notice` messages may help you operate Terraform Cloud Agents more easily.
+Adding monitoring and alerting for these `notice` messages may help you operate HCP Terraform Agents more easily.

@@ -1,12 +1,12 @@
 ---
-page_title: Terraform Cloud Agents - Managing Agent Pools - Terraform Cloud and Terraform Enterprise
+page_title: HCP Terraform Agents - Managing Agent Pools - HCP Terraform and Terraform Enterprise
 description: >-
-  Agent pools are groups of one or more agents in Terraform Cloud. Create agent pools and assign them to one or more workspaces.
+  Agent pools are groups of one or more agents in HCP Terraform. Create agent pools and assign them to one or more workspaces.
 ---
 
 # Manage Agent Pools
 
-Terraform Cloud organizes agents into pools. Each workspace can specify which agent pool should run its workloads.
+HCP Terraform organizes agents into pools. Each workspace can specify which agent pool should run its workloads.
 
 ## Permissions
 
@@ -15,7 +15,7 @@ Managing agent pools requires the following permissions:
 - You must be a member of the **Owners** team within your organization to manage an organization's agents.
 - You must have **Admin** access to a workspace before you can change its [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use an agent pool.
 
-Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) in the Terraform Cloud documentation for details.
+Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) in the HCP Terraform documentation for details.
 
 [permissions-citation]: #intentionally-unused---keep-for-maintainers
 
@@ -25,11 +25,11 @@ To create an agent pool:
 
 1. Go to your organization's settings, click **Agents**, and then click **Create agent pool**.
 
-1. Enter an **Agent Pool Name**, and then click **Continue**. Terraform Cloud uses this name to distinguish agent pools in a workspace's settings.
+1. Enter an **Agent Pool Name**, and then click **Continue**. HCP Terraform uses this name to distinguish agent pools in a workspace's settings.
 
 1. Enter a token **Description**, and then click **Create Token**.
 
-1. Save your token information in a secure location. You need the token to connect an agent to this Terraform Cloud agent pool, and Terraform Cloud does not display the token again after this step.
+1. Save your token information in a secure location. You need the token to connect an agent to this HCP Terraform agent pool, and HCP Terraform does not display the token again after this step.
 
 1. Click **Finish**.
 
@@ -76,7 +76,7 @@ To configure the workspace to execute runs using an agent:
 1. Select **Agent** as the [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode), and select the agent pool this workspace should use.
 1. Click **Save Settings**.
 
-The workspace begins using the agent for Terraform runs. Runs involving an agent include information about that agent in the run details. Terraform Cloud may use different agents for the plan and apply operations, depending on agent availability within the pool.
+The workspace begins using the agent for Terraform runs. Runs involving an agent include information about that agent in the run details. HCP Terraform may use different agents for the plan and apply operations, depending on agent availability within the pool.
 
 
 ## Revoke an Agent Token
@@ -113,18 +113,18 @@ To view agent statuses, go to your organization's settings and click **Agents**.
 - **Idle**: The agent is running normally and waiting for jobs to be available.
 - **Busy**: The agent is running normally and currently executing a job.
 - **Unknown**: The agent has not reported any status for an unexpected period of time. The agent may yet recover if the agent's situation is temporary, such as a short-lived network partition.
-- **Errored**: The agent encountered an unrecoverable error or has been in an Unknown state for long enough that Terraform Cloud considers it errored. This status may indicate that something interrupted the agent process, the process crashed, a permanent network partition exists, or another similar problem. If the agent was in the process of running an operation (such as a plan or apply), the agent marks that operation as errored. If the current agent process recovers, it exits immediately.
+- **Errored**: The agent encountered an unrecoverable error or has been in an Unknown state for long enough that HCP Terraform considers it errored. This status may indicate that something interrupted the agent process, the process crashed, a permanent network partition exists, or another similar problem. If the agent was in the process of running an operation (such as a plan or apply), the agent marks that operation as errored. If the current agent process recovers, it exits immediately.
 - **Exited**: The agent exited normally and successfully informed Terraform of it doing so.
 
 ## Agent Capacity Usage
 
-Refer to [Terraform Cloud pricing](https://www.hashicorp.com/products/terraform/pricing) for more information about Terraform Cloud Agents.
+Refer to [HCP Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for more information about HCP Terraform Agents.
 
 Agents count towards the organization's purchased agent capacity if they are in the **Idle**, **Busy**, or **Unknown** state. Agents that are in the **Errored** or **Exited** state do not count towards the organization's total agent capacity.
 
-Agents in the **Unknown** state continue to count against the organization's total agent allowance, as this status is typically an indicator of a temporary communication issue between the agent and Terraform Cloud. **Unknown** agents that do not respond after a period of 5 minutes automatically transition to an **Errored** state, at which point they do not count against the agent allowance.
+Agents in the **Unknown** state continue to count against the organization's total agent allowance, as this status is typically an indicator of a temporary communication issue between the agent and HCP Terraform. **Unknown** agents that do not respond after a period of 5 minutes automatically transition to an **Errored** state, at which point they do not count against the agent allowance.
 
-Agents may have an **Unknown** status if they terminate without gracefully exiting. Agents should always be shut down according to the [Stop the Agent](/terraform/cloud-docs/agents/agents#stop-the-agent) section to allow them to deregister from Terraform Cloud. To minimize **Unknown** agent statuses, we strongly recommend configuring any process supervisor, application scheduler, or other runtime manager to follow this procedure.
+Agents may have an **Unknown** status if they terminate without gracefully exiting. Agents should always be shut down according to the [Stop the Agent](/terraform/cloud-docs/agents/agents#stop-the-agent) section to allow them to deregister from HCP Terraform. To minimize **Unknown** agent statuses, we strongly recommend configuring any process supervisor, application scheduler, or other runtime manager to follow this procedure.
 
 You can deregister agents that are **Unknown**, **Errored**, or **Exited** through either the **Organization Settings > Agents** page or through the [Agent API](/terraform/cloud-docs/api-docs/agents#delete-an-agent). Deregistered agents no longer appear in the settings page or count against the organization's agent allowance.
 
