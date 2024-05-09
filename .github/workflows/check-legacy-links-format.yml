@@ -8,7 +8,7 @@ on:
 
 jobs:
   check-links:
-    uses: hashicorp/dev-portal/.github/workflows/docs-content-check-legacy-links-format.yml@475289345d312552b745224b46895f51cc5fc490
+    uses: hashicorp/dev-portal/.github/workflows/docs-content-check-legacy-links-format.yml@5caf6260e0ea2f6a452a0791c7b7f88ebebf12d0
     with:
       repo-owner: "hashicorp"
       repo-name: "terraform-docs-agents"
