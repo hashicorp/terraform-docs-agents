@@ -5,13 +5,68 @@ on:
     paths:
       - "website/docs/**/*.mdx"
       - "website/data/*-nav-data.json"
+  pull_request: # temporary
+
+env:
+  COMMENT_BODY_PREFIX: "<!-- check-legacy-links-format output -->"
 
 jobs:
   check-links:
-    uses: hashicorp/dev-portal/.github/workflows/docs-content-check-legacy-links-format.yml@475289345d312552b745224b46895f51cc5fc490
-    with:
-      repo-owner: "hashicorp"
-      repo-name: "terraform-docs-agents"
-      commit-sha: ${{ github.sha }}
-      mdx-directory: "website/docs"
-      nav-data-directory: "website/data"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - uses: jwalton/gh-find-current-pr@89ee5799558265a1e0e31fab792ebb4ee91c016b # v1.3.3
+        id: find-pull-request
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get FILE_PATHS
+        if: steps.find-pull-request.outputs.number
+        run: |
+          filePaths="$(gh api /repos/$OWNER/$REPO/pulls/$PULL_NUMBER/files --jq '.[].filename')"
+          echo 'FILE_PATHS='$filePaths >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          PULL_NUMBER: ${{ steps.find-pull-request.outputs.pr }}
+
+      - name: Run link format checker
+        if: steps.find-pull-request.outputs.number
+        id: run-checker
+        uses: ./.github/actions/check-legacy-links-format
+
+      - name: Find Comment
+        if: steps.find-pull-request.outputs.number
+        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+        id: fc
+        with:
+          issue-number: ${{ steps.find-pull-request.outputs.pr }}
+          comment-author: "github-actions[bot]"
+          body-includes: ${{ env.COMMENT_BODY_PREFIX }}
+
+      - name: Create or update comment
+        if: steps.find-pull-request.outputs.number
+        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ steps.find-pull-request.outputs.pr }}
+          body: ${{ steps.run-checker.outputs.comment-body }}
+          edit-mode: replace
+
+      - name: Fail if there are errors
+        if: steps.find-pull-request.outputs.number && steps.run-checker.outputs.check-legacy-links-format-found-errors == 'true'
+        run: exit 1
+
+  #########
+  # jobs:
+  # check-links:
+  #   uses: hashicorp/dev-portal/.github/workflows/docs-content-check-legacy-links-format.yml@475289345d312552b745224b46895f51cc5fc490
+  #   with:
+  #     repo-owner: "hashicorp"
+  #     repo-name: "terraform-docs-agents"
+  #     commit-sha: ${{ github.sha }}
+  #     mdx-directory: "website/docs"
+  #     nav-data-directory: "website/data"
