@@ -5,13 +5,114 @@ on:
     paths:
       - "website/docs/**/*.mdx"
       - "website/data/*-nav-data.json"
+  pull_request: # temporary
 
 jobs:
-  check-links:
-    uses: hashicorp/dev-portal/.github/workflows/docs-content-check-legacy-links-format.yml@475289345d312552b745224b46895f51cc5fc490
-    with:
-      repo-owner: "hashicorp"
-      repo-name: "terraform-docs-agents"
-      commit-sha: ${{ github.sha }}
-      mdx-directory: "website/docs"
-      nav-data-directory: "website/data"
+  docs-content-check-legacy-links-format:
+    runs-on: ubuntu-latest
+    env:
+      OWNER: "hashicorp"
+      REPO: "terraform-docs-agents"
+      COMMIT_SHA: ${{ github.sha }}
+    steps:
+      - name: Get PR number
+        id: get-pr-number
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const { data } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: process.env.OWNER,
+              repo: process.env.REPO,
+              commit_sha: process.env.COMMIT_SHA
+            })
+            const prNumber = data && data[0] && data[0].number
+            if (prNumber) {
+              return prNumber
+            } else {
+              return false
+            }
+
+      - name: Get list of PR files
+        if: ${{ steps.get-pr-number.outputs.result != 'false' }}
+        id: get-lists-of-pr-files
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        env:
+          PR_NUMBER: ${{ steps.get-pr-number.outputs.result }}
+          MDX_DIRECTORY: "website/docs"
+          NAV_DATA_DIRECTORY: "website/data"
+        with:
+          script: |
+            const changedMdxFiles = []
+            const changedNavDataJsonFiles = []
+
+            // A helper for recursively fetching all files for a PR
+            const fetchAllPrFiles = async ({ allPrFiles = [], page = 1 }) => {
+              const { data } = await github.rest.pulls.listFiles({
+                owner: process.env.OWNER,
+                repo: process.env.REPO,
+                per_page: 100,
+                pull_number: process.env.PR_NUMBER,
+                page,
+              })
+              data.forEach(file => {
+                allPrFiles.push(file)
+              })
+
+              if (data.length === 100) {
+                await fetchAllPrFiles({ allPrFiles, page: page + 1 })
+              }
+            }
+
+            // Fetch all the PR files
+            const allPrFiles = []
+            await fetchAllPrFiles({ allPrFiles })
+
+            // Sort the PR files for what we're interested in
+            allPrFiles.forEach(file => {
+              if (file.status === 'removed') {
+                return
+              }
+              if (file.filename.endsWith('.mdx')) {
+                const filenameWithoutDirectory = file.filename.replace(process.env.MDX_DIRECTORY, '')
+                changedMdxFiles.push(filenameWithoutDirectory)
+                return
+              }
+              // @TODO uncomment when new nav-data formats can be considered
+              // valid by validateNode() in react-components/docs-sidenav
+              //if (file.filename.endsWith('-nav-data.json')) {
+              //  const filenameWithoutDirectory = file.filename.replace(process.env.NAV_DATA_DIRECTORY, '')
+              //  changedNavDataJsonFiles.push(filenameWithoutDirectory)
+              //}
+            })
+
+            // Log and return the result
+            const result = { changedMdxFiles, changedNavDataJsonFiles }
+            console.log('get-lists-of-pr-files result:', result)
+            return result
+
+      - name: Checkout dev-portal
+        if: ${{ steps.get-pr-number.outputs.result != 'false' }}
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        with:
+          repository: "hashicorp/dev-portal"
+
+      - name: Install dev-portal dependencies
+        if: ${{ steps.get-pr-number.outputs.result != 'false' }}
+        run: npm ci
+
+      - name: Check out branch with content changes
+        if: ${{ steps.get-pr-number.outputs.result != 'false' }}
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        with:
+          path: "content-repo"
+          repository: "${{ inputs.repo-owner }}/${{ inputs.repo-name }}"
+
+      - name: Run rewrite-docs-content-links script
+        if: ${{ steps.get-pr-number.outputs.result != 'false' }}
+        id: run-rewrite-docs-content-links-script
+        env:
+          MDX_FILE_PATH_PREFIX: "content-repo/website/docs"
+          NAV_DATA_FILE_PATH_PREFIX: "content-repo/website/data"
+          RELEVANT_CHANGED_FILES: ${{ steps.get-lists-of-pr-files.outputs.result }}
+          ERROR_IF_LINKS_TO_REWRITE: "true"
+        run: VERCEL_URL="developer.hashicorp.com" npm run rewrite-docs-content-links
