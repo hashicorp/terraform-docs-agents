@@ -44,9 +44,9 @@ metrics in this section are prefixed by `tfc-agent.core.`.
 | ---------------------------- | ----- | -------------------------------------------------------------------- |
 | `status.busy`                | Gauge | Number of agents in `busy` status.                                   |
 | `status.idle`                | Gauge | Number of agents in `idle` status.                                   |
-| `register.milliseconds`      | Timer | Time to register the agent with HCP Terraform.                     |
+| `register.milliseconds`      | Timer | Time to register the agent with HCP Terraform.                       |
 | `fetch_job.milliseconds`     | Timer | Time to complete a job dequeue request.                              |
-| `update_status.milliseconds` | Timer | Time to send a status update over from the agent to HCP Terraform. |
+| `update_status.milliseconds` | Timer | Time to send a status update over from the agent to HCP Terraform.   |
 
 ## Runtime metrics
 
@@ -77,6 +77,23 @@ container metrics. All metrics in this section are prefixed by
 | `go.gc.pause_total.nanoseconds` | Timer | Cumulative time spent in stop-the-world pauses.     |
 | `uptime.milliseconds`           | Timer | Cumulative time since the agent started.            |
 
+## Resource utilization metrics
+
+HCP Terraform Agents emit metrics about overall system resource utilization any
+time the agent's status is `busy` (i.e., when the agent is handling a plan,
+apply, policy evaluation, etc.) These metrics use kernel-level information to
+produce metrics and should match closely with what you would get from familiar
+tools such as `top` and `free`. All metrics in this section are prefixed by
+`tfc-agent.core.profiler.`.
+
+| Metric name                 | Type  | Description                                                                 |
+| --------------------------- | ----- | --------------------------------------------------------------------------- |
+| `cpu.busy.percent`          | Gauge | Percentage of CPU time spent in a busy state.                               |
+| `memory.used.percent`       | Gauge | Percentage of memory used.                                                  |
+| `memory.used.bytes`         | Gauge | Used memory size in bytes.                                                  |
+| `io.read.bytes_per_second`  | Gauge | Read throughput of the agent and descendant processes in bytes per second.  |
+| `io.write.bytes_per_second` | Gauge | Write throughput of the agent and descendant processes in bytes per second. |
+
 ## Terraform component metrics
 
 The following metrics are emitted by the `terraform` component, which is
@@ -86,7 +103,7 @@ metrics in this section are prefixed by `tfc-agent.core.terraform.`.
 | Metric name                                    | Type  | Description                                                                         |
 | ---------------------------------------------- | ----- | ----------------------------------------------------------------------------------- |
 | `configure_terraform_cli.milliseconds`         | Timer | Time spent configuring the Terraform CLI utility prior to execution.                |
-| `handle_signal.milliseconds`                   | Timer | Time spent handling a signal from HCP Terraform.                                  |
+| `handle_signal.milliseconds`                   | Timer | Time spent handling a signal from HCP Terraform.                                    |
 | `execute.milliseconds`                         | Timer | Time spent handling a Terraform operation.                                          |
 | `output_stream.upload_chunk.bytes`             | Gauge | Size of a chunk of Terraform output uploaded.                                       |
 | `output_stream.upload_chunk.milliseconds`      | Timer | Time spent uploading a single chunk of Terraform output.                            |
@@ -94,7 +111,7 @@ metrics in this section are prefixed by `tfc-agent.core.terraform.`.
 | `output_stream.upload_full.milliseconds`       | Timer | Time spent uploading the full Terraform log.                                        |
 | `output_stream.close.milliseconds`             | Timer | Time spent finalizing a Terraform output stream.                                    |
 | `override_sensitive_variables.milliseconds`    | Timer | Time spent generating a configuration file to override variable sensitivity.        |
-| `override_sensitive_variables.count`           | Gauge | Number of variables in a run of which HCP Terraform modified the sensitivty flag. |
+| `override_sensitive_variables.count`           | Gauge | Number of variables in a run of which HCP Terraform modified the sensitivty flag.   |
 | `persist_filesystem.milliseconds`              | Timer | Time spent packing and uploading a filesystem image.                                |
 | `persist_filesystem.pack.bytes`                | Gauge | Size of a packed up filesystem image.                                               |
 | `persist_filesystem.pack.milliseconds`         | Timer | Time spent packing the contents of a filesystem.                                    |
@@ -112,14 +129,14 @@ metrics in this section are prefixed by `tfc-agent.core.terraform.`.
 | `run_meta.additions`                           | Gauge | Number of resources added or proposed to be added in a Terraform operation.         |
 | `run_meta.changes`                             | Gauge | Number of resources changed or proposed to change in a Terraform operation.         |
 | `run_meta.destructions`                        | Gauge | Number of resources destroyed or proposed to be destroyed in a Terraform operation. |
-| `setup_backend.milliseconds`                   | Timer | Time spent configuring Terraform CLI for HCP Terraform.                           |
+| `setup_backend.milliseconds`                   | Timer | Time spent configuring Terraform CLI for HCP Terraform.                             |
 | `setup_ssh_key.milliseconds`                   | Timer | Time spent configuring an SSH key for Terraform to use while downloading modules.   |
 | `setup_ssh_key.check_git_version.milliseconds` | Timer | Time spent ensuring the local version of "git" is adequate for leveraging SSH auth. |
-| `setup_terraform_binary.milliseconds`          | Timer | Time spent downloading and unpacking a Terraform Community release.                       |
-| `setup_terraform_binary.download.bytes`        | Gauge | Size of a downloaded Terraform Community version.                                         |
-| `setup_terraform_binary.download.milliseconds` | Timer | Time spent downloading a Terraform Community release.                                     |
-| `setup_terraform_binary.unpack.bytes`          | Gauge | Size of an unpacked Terraform Community release.                                          |
-| `setup_terraform_binary.unpack.milliseconds`   | Timer | Time spent unpacking a Terraform Community release.                                       |
+| `setup_terraform_binary.milliseconds`          | Timer | Time spent downloading and unpacking a Terraform Community release.                 |
+| `setup_terraform_binary.download.bytes`        | Gauge | Size of a downloaded Terraform Community version.                                   |
+| `setup_terraform_binary.download.milliseconds` | Timer | Time spent downloading a Terraform Community release.                               |
+| `setup_terraform_binary.unpack.bytes`          | Gauge | Size of an unpacked Terraform Community release.                                    |
+| `setup_terraform_binary.unpack.milliseconds`   | Timer | Time spent unpacking a Terraform Community release.                                 |
 | `setup_terraform_config.milliseconds`          | Timer | Time spent downloading and unpacking a Terraform configuration.                     |
 | `setup_terraform_config.download.bytes`        | Gauge | Size of a downloaded Terraform configuration.                                       |
 | `setup_terraform_config.download.milliseconds` | Timer | Time spent downloading a Terraform configuration.                                   |
