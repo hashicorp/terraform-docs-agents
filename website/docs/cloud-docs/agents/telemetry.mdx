@@ -77,10 +77,7 @@ the HCP Terraform Agent can talk to) on port 4317 of the local machine.
 
 ### Configuring the collector
 
-The OpenTelemetry collector takes configuration in the form of a YAML file. It
-may be useful to refer to the default YAML configuration file as a starting
-point for your own configuration. Its source may be found
-[here](https://github.com/open-telemetry/opentelemetry-collector-releases/blob/main/configs/otelcol-contrib.yaml).
+The OpenTelemetry collector takes configuration in the form of a YAML file. Refer to the [default YAML configuration file](https://github.com/open-telemetry/opentelemetry-collector-releases/blob/main/distributions/otelcol-contrib/config.yaml) as a starting point for writing your own configuration.
 
 To tweak the configuration, save your custom YAML configuration to a file on
 disk called `collector.yaml`, and run the collector container with the
