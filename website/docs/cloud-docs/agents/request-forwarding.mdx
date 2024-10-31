@@ -38,6 +38,7 @@ of accessing the target API.
 
 ## Agent Configuration
 
+### Enable request forwarding
 To enable request forwarding, start the agent with the `-request-forwarding`
 flag, or set the environment variable `TFC_AGENT_REQUEST_FORWARDING=true`. When
 the agent starts, you will see the following log messages:
@@ -49,6 +50,13 @@ the agent starts, you will see the following log messages:
 
 These log messages indicate that the agent has successfully connected to HCP Terraform
 and is ready to start forwarding requests.
+
+### (Optional) Accept ingress jobs needed for Private VCS access
+By default, HCP Terraform will try to clone a repository using its own infrastructure.
+For Private repository access to work, Configuration Version(CV) ingress needs to happen through the agent.
+For this ingress job type to be accepted, agent must be started with `-accept` containing `ingress`.
+This job type is disabled in the default configuration.
+Skipping this configuration step will result in timeout Configuration Version errors being shown when PVCS is used.
 
 ## Requirements and Limitations
 
