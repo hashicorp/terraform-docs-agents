@@ -116,6 +116,18 @@ To view agent statuses, go to your organization's settings and click **Agents**.
 - **Errored**: The agent encountered an unrecoverable error or has been in an Unknown state for long enough that HCP Terraform considers it errored. This status may indicate that something interrupted the agent process, the process crashed, a permanent network partition exists, or another similar problem. If the agent was in the process of running an operation (such as a plan or apply), the agent marks that operation as errored. If the current agent process recovers, it exits immediately.
 - **Exited**: The agent exited normally and successfully informed Terraform of it doing so.
 
+
+## Agent job types
+
+| Job type name | Description                   | Relevant documentation                                                                                          | Terraform CLI equivalent |
+|---------------|-------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------|
+| apply         | Apply workspace runs          | [Terraform Apply](https://developer.hashicorp.com/terraform/cli/commands/apply)                                 | `terraform apply`                                                                                              |
+| assessment    | Health Assessments            | [HCP Terraform Health Assessments](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/health)      | -                                                                               |
+| ingress       | Configuration Version Ingress | [Configuration Version Ingress](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/configurations) | -                                                                                                          |
+| plan          | Plan workspace runs           | [Terraform Plan](https://developer.hashicorp.com/terraform/cli/commands/plan)                                   | `terraform plan`                                                                                                |
+| policy        | Policy compliance checks      | [HCP Terraform policy assesment](https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement)       | -                                                                                                               |
+| test          | Module tests                  | [HCP Terraform Registry Module Tests](https://developer.hashicorp.com/terraform/cloud-docs/registry/test)       | `terraform test`                                                                                                |
+
 ## Agent Capacity Usage
 
 Refer to [HCP Terraform pricing](https://www.hashicorp.com/products/terraform/pricing) for more information about HCP Terraform Agents.

@@ -96,15 +96,6 @@ You can configure the agent to accept forwarded requests from HCP Terraform. Req
 Agents handle forwarded requests separately from other workloads and may process requests in parallel to plans, applies, policy checks, etc. You can modify this behavior by enabling or disabling certain workload types via the `-accept` parameter, and selectively setting the `-request-forwarding` flag on certain agent(s) only. For example, you may have a pool of 4 agents, where two are configured to handle only plans and applies, and the other two are configured to handle only request forwarding.
 
 
-| Job type name | Description                                                                                                     | Terraform CLI equivalent |
-|---------------|-----------------------------------------------------------------------------------------------------------------|--------------------------|
-| apply         | [Terraform Apply](https://developer.hashicorp.com/terraform/cli/commands/apply)                                 | `terraform apply`        |
-| assessment    | [HCP Terraform Health Assessments](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/health)      | -                        |
-| ingress       | [Configuration Version Ingress](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/configurations) | -                        |
-| plan          | [Terraform Plan](https://developer.hashicorp.com/terraform/cli/commands/plan)                                   | `terraform plan`         |
-| policy        | [HCP Terraform policy assesment](https://developer.hashicorp.com/terraform/cloud-docs/policy-enforcement)       | -                        |
-| test          | [HCP Terraform Registry Module Tests](https://developer.hashicorp.com/terraform/cloud-docs/registry/test)       | `terraform test`         |
-
 ## Stop the Agent
 
 ~> **Important:** We strongly recommend that you only terminate the agent using one of these methods. Abruptly terminating an agent by forcefully stopping the process or power cycling the host does not let the agent deregister and results in an **Unknown** agent status. Abrupt termination may cause further capacity issues. Refer to [capacity issues](/terraform/cloud-docs/agents/agent-pools#agent-capacity-usage) for details.
@@ -156,6 +147,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
     Default: `false`
 
     Environment variable: `TFC_AGENT_LOG_JSON`
+
 
 * `-data-dir <path>`:
     The path to a directory to store all agent-related data, including
