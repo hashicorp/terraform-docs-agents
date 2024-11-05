@@ -95,7 +95,6 @@ You can configure the agent to accept forwarded requests from HCP Terraform. Req
 
 Agents handle forwarded requests separately from other workloads and may process requests in parallel to plans, applies, policy checks, etc. You can modify this behavior by enabling or disabling certain workload types via the `-accept` parameter, and selectively setting the `-request-forwarding` flag on certain agent(s) only. For example, you may have a pool of 4 agents, where two are configured to handle only plans and applies, and the other two are configured to handle only request forwarding.
 
-
 ## Stop the Agent
 
 ~> **Important:** We strongly recommend that you only terminate the agent using one of these methods. Abruptly terminating an agent by forcefully stopping the process or power cycling the host does not let the agent deregister and results in an **Unknown** agent status. Abrupt termination may cause further capacity issues. Refer to [capacity issues](/terraform/cloud-docs/agents/agent-pools#agent-capacity-usage) for details.
