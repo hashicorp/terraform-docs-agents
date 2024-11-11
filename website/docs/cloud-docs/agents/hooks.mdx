@@ -47,7 +47,7 @@ Please note the following behavior when using hooks:
   variable with a hook specific name `TFC_AGENT_HOOK_[HOOK NAME]_TIMEOUT`. An example 
   of setting the timeout for the pre-plan hook to 2 minutes is `TFC_AGENT_HOOK_PREPLAN_TIMEOUT=120`.
   If a hook times out the Terraform run will fail immediately.
-- Environment variables for terraform do not persist across hooks. For example, if a
+- Terraform environment variables do not persist across hooks. For example, if a
   `pre-plan` hook exports environment variables, they will not be available
   during the `post-plan` hook. Similarly, if `terraform plan` exports
   environment variables, they will not be available during the `post-plan` hook.
