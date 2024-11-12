@@ -51,7 +51,7 @@ These log messages indicate that the agent has successfully connected to HCP Ter
 and is ready to start forwarding requests.
 
 ### Optionally accept ingress jobs to access a private VCS
-By default, HCP Terraform will try to clone a repository using its own infrastructure.
+If you want to use a private VCS provider, you must configure your HCP Terraform agent to support private VCS by allowing access to those private repositories. To learn more, refer to [Connect to Private VCS Providers](/terraform/cloud-docs/vcs/private#configure-the-agent-pool-and-agent). 
 For Private repository access to work, Configuration Version(CV) ingress needs to happen through the agent.
 For this ingress job type to be accepted, agent must be started with `-accept` containing `ingress`.
 This job type is disabled in the default configuration.
