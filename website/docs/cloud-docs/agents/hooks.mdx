@@ -42,14 +42,17 @@ Please note the following behavior when using hooks:
 	create a `pre-plan` and `pre-apply` hook, but you cannot create two
 	`pre-plan` hooks.
 - Each hook must have the execute permission set.
-- Each hook has a 60 second timeout. If a hook times out the Terraform run will
-	fail immediately.
-- Environment variables do not persist across hooks. For example, if a
+- Each hook has a default timeout of 60 seconds and a max timeout of 10 minutes. You can 
+  configure the timeout for each hook in seconds using an environment variable with the 
+  hook's name `TFC_AGENT_HOOK_[HOOK NAME]_TIMEOUT`. For example, you can set the timeout 
+  for the pre-plan hook to 2 minutes by setting `TFC_AGENT_HOOK_PRE_PLAN_TIMEOUT=120`. If 
+  a hook times out, the Terraform run fails immediately.
+- Terraform environment variables do not persist across hooks. For example, if a
   `pre-plan` hook exports environment variables, they will not be available
   during the `post-plan` hook. Similarly, if `terraform plan` exports
   environment variables, they will not be available during the `post-plan` hook.
 
-## Setting environment variables
+## Setting Terraform Environment Variables
 
 Hooks may be used to set environment variables for subsequent `terraform`
 commands to use. To set an environment variable, write lines in `KEY=value`
