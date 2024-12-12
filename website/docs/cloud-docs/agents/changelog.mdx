@@ -18,12 +18,18 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.17.3 (12/10/2024)
+
+BUG FIXES:
+* Updated inaccurate constraint introduced in previous version gating ephemeral variables (#841)
+* Fixed an issue where streaming extremely large job outputs would retry after the server rejected further requests (#837)
+
 ## 1.17.2 (11/26/2024)
 
 IMPROVEMENTS:
 
 * Added jitter to connection retries for Request Forwarding (#817)
-* Ensure ephemeral variables (Terraform v1.10 feature) are passed between plan & apply (#831)
+* Ensured ephemeral variables (Terraform v1.10 feature) are passed between plan & apply (#831)
 
 ## 1.17.1 (11/13/20204)
 
