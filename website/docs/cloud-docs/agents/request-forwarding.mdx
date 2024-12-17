@@ -1,12 +1,10 @@
 ---
-page_title: HCP Terraform Agents - Request Forwarding
+page_title: HCP Terraform agent request forwarding
 description: >-
-  Access private network resources using agents with request forwarding.
+  Learn how request forwarding enables accessing private network resources.
 ---
 
-# Request Forwarding
-
-~> **Coming Soon**: We intend to use request forwarding in future HCP Terraform features. We will update this page when a feature using request forwarding is generally available.
+# Request forwarding
 
 You can configure HCP Terraform Agents to handle HTTP and HTTPS
 request forwarding on behalf of HCP Terraform. This enables HCP Terraform to access
@@ -24,8 +22,13 @@ Agents register with HCP Terraform via outbound-only connections. HCP Terraform
 holds these connections open and uses them to transmit requests and responses 
 between the target API and HCP Terraform.
 
+<!-- Add light theme image when light theme is supported
+
 ![Request forwarding architecture diagram](/public/img/request-forwarding-arch-light.png#light-theme-only)
-![Request forwarding architecture diagram](/public/img/request-forwarding-arch-dark.png#dark-theme-only)
+
+-->
+
+![Request forwarding architecture diagram](/public/img/request-forwarding-arch-dark.png)
 
 ## Forwarded Request Routing
 
