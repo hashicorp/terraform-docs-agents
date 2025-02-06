@@ -18,6 +18,13 @@ within each release are categorized into one or more of the following labels:
 Each version below corresponds to a release artifact available for download on
 the official [releases website](https://releases.hashicorp.com/tfc-agent/).
 
+## 1.20.0 (02/06/2025)
+
+BUG FIXES:
+
+* Rolled back to Ubuntu `v20.04` from upgrade to `v24.04` for base Docker image to address errors seen with `v24.04`. (#913)
+   - This fixed a bug which caused tfc-agent:v1.19.0 to break on certain configs using local-exec or other provisioners that rely on python or the AWS CLI.
+
 ## 1.19.0 (02/05/2025)
 
 BUG FIXES:
@@ -38,7 +45,7 @@ FEATURES:
 SECURITY:
 
 * Updated dependency `github.com/hashicorp/go-slug` to `v0.16.4` (#892)
-   - This resolved [CVE-2025-0377 in hashicorp/go-slug](https://discuss.hashicorpmake update_website.com/t/hcsec-2025-01-hashicorp-go-slug-vulnerable-to-zip-slip-attack/72719).
+   - This resolved [CVE-2025-0377 in hashicorp/go-slug](https://discuss.hashicorp.com/t/hcsec-2025-01-hashicorp-go-slug-vulnerable-to-zip-slip-attack/72719).
    - Fixed a bug which caused tfc-agent:v1.17.6 to break on certain API-driven workflows in HCP Terraform and Terraform Enterprise.
 
 ## 1.17.6 (01/23/2025)
