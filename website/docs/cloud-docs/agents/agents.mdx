@@ -50,6 +50,26 @@ export TFC_AGENT_NAME=your-agent-name
 Once complete, your agent and its status appear on the **Agents** page in the HCP Terraform UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
 -> **Note:** At this time, starting an agent with this method is not supported by AMD. Using the official agent Docker image instead is recommended, with the `--platform` tag set.
 
+### Optional Configuration: Customizing Agent Docker Image
+The official agent Docker image executes the `tfc-agent` process as the non-root `tfc-agent` user. For some workflows, such as workflows requiring the ability to install software using `apt-get` during `local-exec` scripts, you may need to build a customized version of the agent Docker image for your internal use.
+
+ ```Dockerfile
+    FROM hashicorp/tfc-agent:latest
+
+    USER root
+
+    # Install sudo. The container runs as a non-root user, but people may rely on
+    # the ability to apt-get install things.
+    RUN apt-get -y install sudo
+
+    # Permit tfc-agent to use sudo apt-get commands.
+    RUN echo 'tfc-agent ALL=NOPASSWD: /usr/bin/apt-get , /usr/bin/apt' >> /etc/sudoers.d/50-tfc-agent
+    
+    USER tfc-agent
+ ```
+ 
+An image customized in this way permits installation of additional software via sudo apt-get.
+
 ### Optional Configuration: Single-Execution Mode
 
 You can also configure the agent to run in single-execution mode, which ensures that the agent only runs a single workload, then terminates. You can use this configuration in combination with Docker and a process supervisor to ensure a clean working environment for every Terraform run.
@@ -72,26 +92,6 @@ The agent maintains a registration and a liveness indicator within HCP Terraform
 - The agent process ID receives one of `SIGINT`, `SIGTERM`, or `SIGQUIT`. It is important to send only one signal. The agent interprets a second signal as forceful termination signal exits immediately.
 
 After initiating a graceful shutdown by either of these methods, the terminal user or parent program should wait for the agent to exit. The amount of time this exit takes depends on the agent's current workload. The agent waits for any current operations to complete before deregistering and exiting.
-
-### Optional Configuration: Customizing Agent Docker Image
-The official agent Docker image executes the `tfc-agent` process as the non-root `tfc-agent` user. For some workflows, such as workflows requiring the ability to install software using `apt-get` during `local-exec` scripts, you may need to build a customized version of the agent Docker image for your internal use.
-
- ```Dockerfile
-    FROM hashicorp/tfc-agent:latest
-
-    USER root
-
-    # Install sudo. The container runs as a non-root user, but people may rely on
-    # the ability to apt-get install things.
-    RUN apt-get -y install sudo
-
-    # Permit tfc-agent to use sudo apt-get commands.
-    RUN echo 'tfc-agent ALL=NOPASSWD: /usr/bin/apt-get , /usr/bin/apt' >> /etc/sudoers.d/50-tfc-agent
-    
-    USER tfc-agent
- ```
- 
-An image customized in this way permits installation of additional software via sudo apt-get.
 
 ### Run Multiple Agents
 
