@@ -8,13 +8,19 @@ description: >-
 
 The agent software runs on your own infrastructure. The token you provide when starting the agent assigns it to an HCP Terraform [agent pool](/terraform/cloud-docs/agents/agent-pools).
 
-### Quick Start
->   Install and run HCP Terraform agents with the official agent Docker container.
-    The `TFC_AGENT_TOKEN` field is generated when you create an agent pool.
-    ```
-    docker pull hashicorp/tfc-agent:latest
-    docker run -e TFC_AGENT_TOKEN=your-token -e TFC_AGENT_NAME=your-agent-name TFC_ADDRESS=your-address hashicorp/tfc-agent
-    ```
+> #### Quick Start  
+Install and run HCP Terraform agents with the official agent Docker container. 
+`TFC_AGENT_NAME` is the name for your agent. The `TFC_AGENT_TOKEN` field is generated when you create an agent pool.
+`TFC_ADDRESS` is your network address.
+```shell
+export TFC_AGENT_TOKEN=your-token
+export TFC_AGENT_NAME=your-agent-name
+export TFC_ADDRESS=your-address
+docker pull hashicorp/tfc-agent:latest
+docker run -e TFC_AGENT_TOKEN -e TFC_AGENT_NAME -e TFC_ADDRESS hashicorp/tfc-agent
+```
+
+
 ## Operational Considerations
 
 Agents do not guarantee a clean working environment per Terraform execution. Each execution occurs in its own temporary directory with a clean environment, but references to absolute file paths or other machine state may cause interference between Terraform executions. We strongly recommend that you write your Terraform code to be stateless and idempotent. You may also want to consider using [single-execution mode](#optional-configuration-single-execution-mode) to ensure your agent only runs a single workload.
@@ -55,11 +61,12 @@ To start the agent and connect it to an HCP Terraform agent pool:
 1. Set the `TFC_AGENT_TOKEN` environment variable.
 1. (Optional) Set the `TFC_AGENT_NAME` environment variable. This name is for your reference only. The agent ID appears in logs and API requests.
 
-```
-export TFC_AGENT_TOKEN=your-token
+```shell
+export TFC_AGENT_TOKEN=${your-token}
 export TFC_AGENT_NAME=your-agent-name
 ./tfc-agent
 ```
+
 Once complete, your agent and its status appear on the **Agents** page in the HCP Terraform UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
 -> **Note:** At this time, starting an agent with this method is not supported by AMD. Using the official agent Docker image instead is recommended, with the `--platform` tag set.
 
