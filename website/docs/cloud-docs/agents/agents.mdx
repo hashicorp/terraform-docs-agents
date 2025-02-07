@@ -68,7 +68,7 @@ export TFC_AGENT_NAME=your-agent-name
 ```
 
 Once complete, your agent and its status appear on the **Agents** page in the HCP Terraform UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
--> **Note:** At this time, starting an agent with this method is not supported by AMD. Using the official agent Docker image instead is recommended, with the `--platform` tag set.
+~> **Important:** At this time, starting an agent with this method is not supported by AMD. Using the official agent Docker image instead is recommended, with the `--platform` tag set.
 
 ### Optional Configuration: Customizing Agent Docker Image
 The official agent Docker image executes the `tfc-agent` process as the non-root `tfc-agent` user. For some workflows, such as workflows requiring the ability to install software using `apt-get` during `local-exec` scripts, you may need to build a customized version of the agent Docker image for your internal use.
