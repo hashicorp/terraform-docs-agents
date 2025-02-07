@@ -6,14 +6,16 @@ description: >-
 
 # Manage Agent Pools
 
-HCP Terraform organizes agents into pools. Each workspace can specify which agent pool should run its workloads.
+An agent pool in HCP Terraform is a collection of agents that can be assigned to workspaces to handle Terraform operations for workspaces. 
+These agents are responsible for executing Terraform runs within specific, scoped workspaces. Agent pools help distribute the execution of Terraform 
+workloads across multiple agents, ensuring scalability and flexibility.
 
 ## Permissions
 
-Managing agent pools requires the following permissions:
+To manage agent pools, you must have the following permissions:
 
-- You must be a member of the **Owners** team within your organization to manage an organization's agents.
-- You must have **Admin** access to a workspace before you can change its [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use an agent pool.
+- **Owners** team membership to manage agents at the organization level.
+- **Admin** access to a workspace to change its [execution mode](/terraform/cloud-docs/workspaces/settings#execution-mode) to use an agent pool.
 
 Refer to [Permissions](/terraform/cloud-docs/users-teams-organizations/permissions) in the HCP Terraform documentation for details.
 
@@ -33,11 +35,12 @@ To create an agent pool:
 
 1. Click **Finish**.
 
-To connect an agent to this pool, [start an agent](/terraform/cloud-docs/agents/agents#start-an-agent) and provide it with the token for this agent pool.
+To connect an agent to this pool, configure and [start the official agent Docker container](/terraform/cloud-docs/agents/agents#quick-start).
+Alternatively, start an agent [from the downloaded agent file](/terraform/cloud-docs/agents/agents#start-an-agent) and provide it with the token for this agent pool.
 
 ## Scope an Agent Pool to Specific Workspaces
 
-Scoping an agent pool lets you specify which workspaces can use it. The agent pool is only available from within the chosen workspaces, and it does not appear other workspace's lists of available agent pools.
+Scoping an agent pool ensures that only selected workspaces can use it. The pool will only appear in the list of available agent pools within the chosen workspaces.
 
 ~> **Important:** Scoping an agent pool does not remove it from workspaces that are actively using it. To remove access, you must first remove the agent pool from within the workspace's settings.
 
@@ -53,12 +56,11 @@ To scope an agent pool to specific workspaces within the organization:
 
 1. Click **Save**.
 
-Only the specified workspaces can use the agent pool.
-
+The pool will only be accessible by the selected workspaces.
 
 ## Configure Workspaces to use the Agent
 
-Use the following steps to configure a workspace to use an agent pool.
+To configure a workspace to use an agent pool, follow these steps:
 
 ### Step 1: Manage Existing Runs
 
@@ -81,11 +83,11 @@ The workspace begins using the agent for Terraform runs. Runs involving an agent
 
 ## Revoke an Agent Token
 
-You may revoke an issued token from your agents at any time.
+You can revoke an issued token from your agents at any time, causing all the agents using it to exit. 
 
-Revoking a token causes the agents using it to exit. You must reinitialize agents with a new token before they can continue servicing workspace jobs. 
+You must reinitialize agents with a new token before they can resume servicing workspace jobs. 
 
-You should allow active runs in the agent pool to finish before revoking the token. If you de-authorize an agent while it is still performing a run, the agent does not post updates about that run. We recommend generating a new token first, initializing the agents using it, and then revoking the old token once no agents are using it. Agent tokens display information about the last time an agent used them. You can use this information to help you decide whether a token is safe to revoke.
+~> **Important**: Allow active runs to finish before revoking a token. If you de-authorize an agent while it is still performing a run, the agent does not post updates about that run. We recommend generating a new token first, initializing the agents using it, and then revoking the old token once no agents are using it. Agent tokens display information about the last time an agent used them. You can use this information to help you decide whether a token is safe to revoke.
 
 1. Navigate to your organization's settings, click **Agents**, and then click the name of the agent pool you want to manage.
 

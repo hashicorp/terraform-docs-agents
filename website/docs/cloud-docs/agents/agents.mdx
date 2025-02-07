@@ -8,11 +8,13 @@ description: >-
 
 The agent software runs on your own infrastructure. The token you provide when starting the agent assigns it to an HCP Terraform [agent pool](/terraform/cloud-docs/agents/agent-pools).
 
-> **Quick Start:** Install and run HCP Terraform agents using our official agent Docker container.
-```
-docker pull hashicorp/tfc-agent:latest
-docker run -e TFC_AGENT_TOKEN=your-token -e TFC_AGENT_NAME=your-agent-name hashicorp/tfc-agent
-```
+### Quick Start
+>   Install and run HCP Terraform agents with the official agent Docker container.
+    The `TFC_AGENT_TOKEN` field is generated when you create an agent pool.
+    ```
+    docker pull hashicorp/tfc-agent:latest
+    docker run -e TFC_AGENT_TOKEN=your-token -e TFC_AGENT_NAME=your-agent-name TFC_ADDRESS=your-address hashicorp/tfc-agent
+    ```
 
 ## Download and Install the Agent
 
@@ -46,6 +48,7 @@ export TFC_AGENT_NAME=your-agent-name
 ./tfc-agent
 ```
 Once complete, your agent and its status appear on the **Agents** page in the HCP Terraform UI. Workspaces can now use this agent pool for runs. Refer to [Configure Workspaces to Use the Agent](/terraform/cloud-docs/agents/agent-pools#configure-workspaces-to-use-the-agent) for details.
+-> **Note:** At this time, starting an agent with this method is not supported by AMD. Using the official agent Docker image instead is recommended, with the `--platform` tag set.
 
 ### Optional Configuration: Single-Execution Mode
 
@@ -70,8 +73,8 @@ The agent maintains a registration and a liveness indicator within HCP Terraform
 
 After initiating a graceful shutdown by either of these methods, the terminal user or parent program should wait for the agent to exit. The amount of time this exit takes depends on the agent's current workload. The agent waits for any current operations to complete before deregistering and exiting.
 
-### Customizing Agent Docker Image
-This Docker image executes the `tfc-agent` process as the non-root `tfc-agent` user. For some workflows, such as workflows requiring the ability to install software using `apt-get` during `local-exec` scripts, you may need to build a customized version of the agent Docker image for your internal use.
+### Optional Configuration: Customizing Agent Docker Image
+The official agent Docker image executes the `tfc-agent` process as the non-root `tfc-agent` user. For some workflows, such as workflows requiring the ability to install software using `apt-get` during `local-exec` scripts, you may need to build a customized version of the agent Docker image for your internal use.
 
  ```Dockerfile
     FROM hashicorp/tfc-agent:latest
