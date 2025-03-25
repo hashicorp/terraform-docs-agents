@@ -6,7 +6,8 @@ description: >-
 
 # Manage Agent Pools
 
-HCP Terraform organizes agents into pools. Each workspace can specify which agent pool should run its workloads.
+HCP Terraform organizes agents into agent pools. An agent pool represents a group of agents that can be used to allow HCP Terraform to communicate with isolated, private, or on-premises infrastructure. 
+When a workspace is configured to execute runs using agents, any available agent in that workspace's associated agent pool is eligible to complete the run. 
 
 ## Permissions
 
@@ -33,7 +34,8 @@ To create an agent pool:
 
 1. Click **Finish**.
 
-To connect an agent to this pool, [start an agent](/terraform/cloud-docs/agents/agents#start-an-agent) and provide it with the token for this agent pool.
+To connect an agent to this pool, configure and [start an agent using the official Docker image](/terraform/cloud-docs/agents/agents#quick-start).
+Alternatively, configure and [start an agent using the binary](/terraform/cloud-docs/agents/agents#start-an-agent) and provide it with the token for this agent pool.
 
 ## Scope an Agent Pool to Specific Workspaces
 
@@ -85,7 +87,7 @@ You may revoke an issued token from your agents at any time.
 
 Revoking a token causes the agents using it to exit. You must reinitialize agents with a new token before they can continue servicing workspace jobs. 
 
-You should allow active runs in the agent pool to finish before revoking the token. If you de-authorize an agent while it is still performing a run, the agent does not post updates about that run. We recommend generating a new token first, initializing the agents using it, and then revoking the old token once no agents are using it. Agent tokens display information about the last time an agent used them. You can use this information to help you decide whether a token is safe to revoke.
+~> **Important:** Allow active runs in the associated agent pool to finish before revoking a token. If you de-authorize an agent while it is still performing a run, the agent does not post updates about that run. We recommend generating a new token first, initializing the agents using it, and then revoking the old token once no agents are using it. Agent tokens display information about the last time an agent used them. You can use this information to help you decide whether a token is safe to revoke.
 
 1. Navigate to your organization's settings, click **Agents**, and then click the name of the agent pool you want to manage.
 
