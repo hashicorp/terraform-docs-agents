@@ -6,6 +6,8 @@ description: >-
 
 # Install and Run Agents
 
+@include 'agents.mdx'
+
 The agent software runs on your own infrastructure. The token you provide when starting the agent assigns it to an HCP Terraform [agent pool](/terraform/cloud-docs/agents/agent-pools).
 
 ## Operational Considerations
@@ -238,7 +240,7 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 
 * `-request-forwarding`:
-    Enable handling of forwarded HTTP requests. Enable this option only if you 
+    Enable handling of forwarded HTTP requests. Enable this option only if you
     are using product features which require it.
 
     Default: `false`
@@ -251,4 +253,3 @@ After initiating a graceful shutdown by either of these methods, the terminal us
 
 * `-v`:
     Display the version and exit.
-
