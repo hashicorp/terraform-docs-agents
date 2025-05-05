@@ -105,7 +105,11 @@ The above customized Dockerfile lets an agent install additional software using 
 
 ### Single-Execution Mode
 
-You can also configure the agent to run in single-execution mode, which ensures that the agent only runs a single workload, then terminates. You can use this configuration in combination with Docker and a process supervisor to ensure a clean working environment for every Terraform run.
+You can also configure the agent to run in single-execution mode, which ensures that the agent only runs a single workload, then terminates. You can use this configuration in combination with Docker and a process supervisor to ensure a clean working environment for every Terraform run. Agents in single -execution mode perform one operation at a time.  Plan and apply are separate operations and would require an agent per operation.  
+
+~>**Important:** When an agent is placed in Single-Execution Mode, if the plan and apply operation is queued from the UI, after the plan has completed its part the agent (placed in single-execution mode) will exit, leaving the apply operation without a agent to process against.  The apply operation will then enter in a queued state until an agent process is available.  This is the expected behavior as agents in single mode perform one operation at a time. 
+
+~>To get around this you’d need to create two distinct agents in single execution mode, under the same agent pool that is configured for the associated workspace execution mode to work through a whole queue plan and apply run operation. 
 
 To use single-execution mode, start the agent with the `-single` command line argument.
 
